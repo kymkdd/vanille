@@ -2,7 +2,7 @@
 a simple batch script i made to automate my gif making process,
 its quite messy and its written in my typing style (explanations as well) so it can be obnoxious to read ig
 
-## important : 
+## important 
 
 this script REQUIRES ffmpeg and gifsicle and works under the assumtion that :
 
