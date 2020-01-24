@@ -248,9 +248,9 @@ rem -------------------------------
 :maths
 set unit=mib
 set conv=1048576
-set /a "perc=%target%*100/%size%"
 if %target% leq 1048576‬ set conv=1024
 set /a "targetv=%target%/%conv%"
+set /a "perc=%target%*100/%size%"
 if %conv% leq 1024 set unit=kib
 goto :eof
 
