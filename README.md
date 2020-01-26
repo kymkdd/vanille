@@ -53,3 +53,9 @@ folder
 |--table.txt
 ```
 if ffmpeg and gifsicle are not added to your PATH you will have to include them in the same folder as well
+
+# thanks
+**krz [@krz0001](https://twitter.com/krz0001)** for helping out with the github setup (im noob orz) and the website
+**ade [@0x0ade](https://twitter.com/0x0ade)** for giving me ideas and helping me out regarding windows stuff and code stuff
+**cats [@ithinkimcats](https://twitter.com/ithinkimcats)** for giving feedback and actually using the tool
+
