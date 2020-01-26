@@ -9,6 +9,7 @@ rem -------------------------------
 rem newline variable from 
 rem https://stackoverflow.com/questions/132799/how-can-i-echo-a-newline-in-a-batch-file
 rem -------------------------------
+
 set NLM=^
 
 
@@ -27,11 +28,11 @@ set "xscale=source"
 set "yscale=source"
 set "fps=source"
 set "vsync=-vsync vfr"
-set "vl=y"
-set "opm=y"
 set "try=1"
 set "loss=25"
 set target=15728640
+set "startset=from the start"
+set "lengthset=entire video"
 
 rem -------------------------------
 rem ask for the file that you need to convert and checking that it does exist
@@ -91,7 +92,7 @@ set popsicle=1
 if "%axs%"=="0" goto ax1
 if "%axis%"=="0" set xscale=400
 if "%axis%"=="1" set yscale=300
-call :valid
+call :timeset
 
 
 :profile_2
@@ -99,7 +100,7 @@ set popsicle=1
 if "%axs%"=="0" goto ax1
 if "%axis%"=="0" set yscale=600
 if "%axis%"=="1" set xscale=600
-call :valid
+call :timeset
 
 :profile_3
 echo enter the desired width (default is same as source)
@@ -112,7 +113,7 @@ echo enter the desired number of loops (default is infinite)
 set /p loops=""
 echo enter the maximum filesize (default is 15728640‬ bytes)
 set /p target=""
-call :valid
+call :timeset
 
 :profile_4
 type profiles.txt
@@ -156,11 +157,41 @@ set axs=1
 goto profile_%mode%
 
 rem -------------------------------
+rem ask if user wants a specific length
+rem -------------------------------
+
+:timeset
+set "errn=3"
+set "tm=y"
+cls
+echo do you want to make a gif of a specific length? (from timestamp) (y/n, y default)
+echo beware experimental feature please read instructions carefuly thanks
+set /p tm=""
+call :tm_%tm% 2>nul
+call :err_%err%
+goto timeset
+
+:tm_y
+cls
+echo where do you want the gif to start from?
+echo timestamp in hh:mm:ss ex 9h3min7s = 09:03:07
+set /p startset=""
+echo how long should the gif be? (from the timestamp)
+echo timestamp in hh:mm:ss ex 9h3min7s = 09:03:07
+set /p lengthset=""
+call :valid
+
+:tm_n
+cls
+call :valid
+
+rem -------------------------------
 rem lil helper to confirm the settings
 rem -------------------------------
 
 :valid
 set "errn=3"
+set "vl=y"
 cls
 if "%axis%"=="0" (
     set "or=horizontal"
@@ -174,6 +205,8 @@ echo framerate     ^| %fps% fps
 echo orientation   ^| %or% 
 echo loops         ^| %loops% 
 echo max size      ^| %target% bytes
+echo start         ^| %startset%
+echo length        ^| %lengthset% 
 echo is this ok? (y/n, y default)
 set /p vl=""
 call :valid_%vl% 2> nul
@@ -185,7 +218,6 @@ cls
 call :ffb
 
 :valid_n
-set "vl=y"
 cls
 goto pro
 
@@ -196,6 +228,16 @@ rem -------------------------------
 :ffb
 set "errn=4"
 echo writing %file%.gif....
+if "%startset%"=="from the start" (
+    set "startset="
+) else (
+    set "startset=-ss %startset% "
+)
+if "%lengthset%"=="entire video" (
+    set "lengthset="
+) else (
+    set "lengthset=-t %lengthset% "
+)
 if "%fps%"=="source" (
     set "fps="
 ) else (
@@ -204,7 +246,7 @@ if "%fps%"=="source" (
 if "%xscale%"=="source" set xscale=-1
 if "%yscale%"=="source" set yscale=-1
 if "%loops%"=="infinite" set loops=0
-ffmpeg -i "%src%" %vsync% -vf "%fps%scale=%xscale%:%yscale%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop %loops% %file%.gif
+ffmpeg %startset% %lengthset% -i "%src%" %vsync% -vf "%fps%scale=%xscale%:%yscale%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop %loops% %file%.gif
 if exist "%file%.gif" call :opti
 call :err_%errn%
 goto hajime
@@ -229,6 +271,7 @@ call end
 
 :optimise
 set "errn=3"
+set "opm=y"
 cls
 call :maths
 echo the file has been made but is over %targetv% %unit% (%perc%%% bigger) do you want to try optimise it? (y/n, y default)
@@ -238,7 +281,6 @@ set /p opm=""
 set fileout=%file%o
 call :opm_%opm% 2> nul
 call :err_%errn%
-set opm=y
 goto optimise
 
 rem -------------------------------
@@ -250,7 +292,7 @@ set unit=mib
 set conv=1048576
 if %target% leq 1048576‬ set conv=1024
 set /a "targetv=%target%/%conv%"
-set /a "perc=%target%*100/%size%"
+set /a "perc=%size%*100/%target%"
 if %conv% leq 1024 set unit=kib
 goto :eof
 
@@ -272,6 +314,9 @@ if %sizeout% gtr %target% (
 ) else (
     call :end
 )
+
+:opm_n
+call:end
 
 :end
 set "errn=5"
