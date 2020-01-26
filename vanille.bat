@@ -2,7 +2,7 @@
 @echo off
 setlocal
 title vanille
-color 9f
+color f9
 
 rem simple gif tool by janssson eri @lazuleri on git hub
 
@@ -11,9 +11,10 @@ rem prevent script from running if ffmpeg and/or gifsicle arent found
 rem -------------------------------
 
 set "errn=0"
-where ffmpeg >nul 2>nul
+set PATH=%PATH%;%~0
+where ffmpeg >nul 2>nul 
 where gifsicle >nul 2>nul
-if not %errorlevel% equ 0 call :err_%errn% 2>nul
+if not %errorlevel% geq 0 call :err_%errn% 2>nul
 
 rem -------------------------------
 rem newline variable from 
@@ -30,11 +31,10 @@ rem setup of the default values
 rem -------------------------------
 
 :hajime
-set "file=vanille"
 set "axis=0"
-set "loops=infinite"
 set "xscale=source"
 set "yscale=source"
+set "loops=infinite"
 set "fps=source"
 set "vsync=-vsync vfr"
 set "try=1"
@@ -50,22 +50,20 @@ rem -------------------------------
 :in
 set "errn=1"
 echo please provide a path to source (drag and drop is ok)
-for /f "delims=" %%I in ('powershell -noprofile "iex (${%~f0} | out-string)"') do (
-    set src=%%~I
-)
+call open.bat
 if "%src%"=="" call :err_%errn% 2>nul
 cls
-call :name
+call :save
 goto in
 
-:name
+:save
 set "errn=2"
-echo please enter a name for the file (it cant be edited without restarting the script!)
-set /p "file="
-if exist "%file%.gif" call :err_%errn% 2>nul
-cls
+echo select where to save the file
+call save.bat
+if exist "%file%" call :err_%errn% 2>nul
+title vanille - editing "%file%"
 call :pro
-goto name
+goto save
 
 rem -------------------------------
 rem ask which profile to use
@@ -76,14 +74,7 @@ set mode=0
 set "axs=0"
 set "popsicle=0"
 set "errn=3"
-echo what profile do you want to use? (i advise people to run 4 first)
-echo  # ^| profile name             ^| quality  ^| filesize   ^|
-echo  0 ^| twitter (default)        ^| high     ^| ^<15mib    ^|
-echo  1 ^| discord                  ^| good     ^| ^<8mib     ^|
-echo  2 ^| discord emoji            ^| low      ^| ^<256kib   ^|
-echo  3 ^| source                   ^| highest  ^| 40~80mib   ^|
-echo  4 ^| custom                   ^| variable ^| variable   ^|
-echo  5 ^| explain the profiles
+type table.txt
 set /p mode=""
 call :profile_%mode% 2> nul
 cls
@@ -96,7 +87,7 @@ rem -------------------------------
 
 :profile_0
 set popsicle=1
-if "%axs%"=="0" goto ax1
+call :probe
 if "%axis%"=="0" set yscale=600
 if "%axis%"=="1" set xscale=600
 call :timeset
@@ -104,7 +95,7 @@ call :timeset
 :profile_1
 set target=8388608
 set popsicle=1
-if "%axs%"=="0" goto ax1
+call :probe
 if "%axis%"=="0" set xscale=400
 if "%axis%"=="1" set yscale=300
 call :timeset
@@ -112,13 +103,13 @@ call :timeset
 :profile_2
 set target=262144
 set popsicle=1
-if "%axs%"=="0" goto ax1
+call :probe
 if "%axis%"=="0" set xscale=48
 if "%axis%"=="1" set yscale=48
 call :timeset
 
 :profile_3
-call :valid
+call :timeset
 
 :profile_4
 echo enter the desired width (default is same as source)
@@ -133,46 +124,25 @@ echo enter the maximum filesize (default is 15728640‬ bytes)
 set /p target=""
 call :timeset
 
-:profile_5
+:profile_?
 type profiles.txt
 pause
+cls
 goto pro
 
 rem -------------------------------
-rem ask what is the orientation of the file
-rem i think this could be done automatically but im not skilled
-rem with ffmpeg so manual is better
+rem find the orientation of the file, bulky but its safer as videos may not specify their orientation natively
 rem -------------------------------
 
-:ax1
-set "errn=3"
-cls
-echo is the source horizontal or vertical? (if square or unsure leave horizontal)
-echo  0 ^| horizontal (default)
-echo  1 ^| vertical
-set /p axis=""
-call :axis_%axis% 2> nul
-call :err_%errn%
-set axis=0
-goto ax1
-
-:axis_0
-cls
-set axis=0
-call :jmp
-
-:axis_1
-cls
-set axis=1
-call :jmp
-
-rem -------------------------------
-rem "jumper" label that escapes ax1 back to profile_# 
-rem -------------------------------
-
-:jmp
-set axs=1
-goto profile_%mode%
+:probe
+for /F "delims=" %%I in ('ffprobe -v error -select_streams v:0 -show_entries stream^=height -of default^=noprint_wrappers^=1:nokey^=1 "%src%" 2^>^&1') do set "height=%%I"
+for /F "delims=" %%I in ('ffprobe -v error -select_streams v:0 -show_entries stream^=width -of default^=noprint_wrappers^=1:nokey^=1 "%src%" 2^>^&1') do set "width=%%I"
+if %width% geq %height% (
+    set axis=0
+) else (
+    set axis=1
+)
+goto :eof
 
 rem -------------------------------
 rem ask if user wants a specific length
@@ -245,7 +215,7 @@ rem -------------------------------
 
 :ffb
 set "errn=4"
-echo writing %file%.gif....
+echo writing %file%....
 if "%startset%"=="from the start" (
     set "startset="
 ) else (
@@ -264,8 +234,8 @@ if "%fps%"=="source" (
 if "%xscale%"=="source" set xscale=-1
 if "%yscale%"=="source" set yscale=-1
 if "%loops%"=="infinite" set loops=0
-ffmpeg %startset% %lengthset% -i "%src%" %vsync% -vf "%fps%scale=%xscale%:%yscale%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop %loops% %file%.gif
-if exist "%file%.gif" call :opti
+ffmpeg %startset% %lengthset% -i "%src%" %vsync% -vf "%fps%scale=%xscale%:%yscale%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop %loops% "%file%"
+if exist "%file%" call :opti
 call :err_%errn%
 goto hajime
 
@@ -283,7 +253,7 @@ rem check if file is under 15mb and try to optimise it (preset 1 and 2 only)
 rem -------------------------------
 
 :opti
-if "%popsicle%"=="1" for %%A IN ("%file%.gif") do set size=%%~zA
+if "%popsicle%"=="1" for %%A IN ("%file%") do set size=%%~zA
 if %size% gtr %target% call :optimise
 call end
 
@@ -296,11 +266,17 @@ echo the file has been made but is over %targetv% %unit% (%perc%%% bigger) do yo
 echo  y ^| yes (default, can take some ^time due to iterations)
 echo  n ^| no, save as is
 set /p opm=""
-set fileout=%file%o
+call :string
 call :opm_%opm% 2> nul
 call :err_%errn%
 goto optimise
 
+:string
+set file1="%file%"
+for %%A IN (%file1%) do set p=%%~dpA
+for %%A IN (%file1%) do set n=%%~nA
+set fileout=%p%%n%o.gif
+goto :eof
 rem -------------------------------
 rem convert bytes to mb visually
 rem -------------------------------
@@ -310,7 +286,8 @@ set unit=mib
 set conv=1048576
 if %target% leq 1048576‬ set conv=1024
 set /a "targetv=%target%/%conv%"
-set /a "perc=%size%*100/%target%"
+set /a "_perc=%size%*100/%target%"
+set /a "perc=%_perc%-100"
 if %conv% leq 1024 set unit=kib
 goto :eof
 
@@ -322,7 +299,7 @@ rem -------------------------------
 cls
 echo attempt number %try%... (compression %loss%)
 if %try% gtr 5 echo the file might not look great
-gifsicle -O3 --lossy=%loss% %file%.gif -o %fileout%.gif
+gifsicle -O3 --lossy=%loss% "%file%" -o "%fileout%"
 set /a "try=try+1"
 if %try% gtr 8 goto end
 set /a "loss=loss+25"
@@ -352,7 +329,7 @@ rem -------------------------------
 :err_0
 cls
 echo critical error %errn%, ffmpeg and/or gifsicle have not been located
-echo please make sure that they are properly added tou your PATH or in the folder of vanille%NL%
+echo please make sure that ffmpeg and gifsicle are properly added to your PATH (.bat version only)%NL%
 pause
 exit
 
@@ -363,7 +340,7 @@ goto in
 
 :err_2
 cls
-echo error %errn%, theres already a file with that name please use another one%NL%
+echo error %errn%, theres already a file with that name please use another name%NL%
 goto name
 
 :err_3
@@ -389,16 +366,8 @@ exit
 rem -------------------------------
 rem behold the powershell file picker
 rem -------------------------------
-
+endlocal
 #>
 
-Add-Type -AssemblyName System.Windows.Forms
-$f = new-object Windows.Forms.OpenFileDialog
-$f.Title = "vanille"
-$f.InitialDirectory = pwd
-$f.Filter = "All Files (*.*)|*.*|Text Files (*.txt)|*.txt"
-$f.ShowHelp = $true
-[void]$f.ShowDialog()
-if ($f.Multiselect) { $f.FileNames } else { $f.FileName }
 
 

@@ -1,4 +1,41 @@
-default
+twitter (default)
+-------
+width           | source        | 600px if vertical
+height          | source        | 600px if horizontal
+framerate       | source        |
+loops           | infinite      |
+target size     | <15 mib       |
+
+a profile optimised for twitter specifically
+values are kind of eyballed but the 15 mebibytes limit is import
+this is mostly what i think offers the best quality/size for twitter and in general
+
+discord
+-------
+width           | source        | 400px if horizontal
+height          | source        | 300px if vertical
+framerate       | source        |
+loops           | infinite      |
+target size     | <8 mib        |
+
+a profile optimised for discord specifically
+the values are what i found is the max for either dimensions
+useful if you just want a very high quality gif and size isnt an issue
+
+discord emoji
+-------
+width           | source        | 48px if horizontal mode
+height          | source        | 48px if vertical mode
+framerate       | source        |
+loops           | infinite      |
+target size     | <256 kib      |
+
+a profile optimised for discord emojis specifically
+the values are what i found is the max for either dimensions
+id discourage people from using it for something else but you do you
+note that its better you use a square source for this as it might get very tiny otherwise
+
+source
 -------
 width           | source        |
 height          | source        |
@@ -11,38 +48,11 @@ the default profile
 this converts the source to gif directly and bypasses the filesize verification
 useful if you just want a very high quality gif and size isnt an issue
 
-discord
--------
-width           | source        | 400px in horizontal mode
-height          | source        | 300px in vertical mode
-framerate       | source        |
-orientation     | user defined  |
-loops           | infinite      |
-target size     | <8 mebibytes  |
-
-a profile optimised for discord specifically
-the values are what i found is the max for either dimensions
-useful if you just want a very high quality gif and size isnt an issue
-
-twitter
--------
-width           | source        | 600px in vertical mode
-height          | source        | 600px in horizontal mode
-framerate       | source        |
-orientation     | user defined  |
-loops           | infinite      |
-target size     | <15 mebibytes |
-
-a profile optimised for twitter specifically
-values are kind of eyballed but the 15 mebibytes limit is import
-this is mostly what i think offers the best quality/size for twitter and in general
-
 custom
 -------
 width           | user defined |
 height          | user defined |
 framerate       | user defined |
-orientation     | user defined |
 loops           | user defined |
 target size     | user defined |
 
