@@ -5,6 +5,16 @@ title vanille
 color 9f
 
 rem simple gif tool by janssson eri @lazuleri on git hub
+
+rem -------------------------------
+rem prevent script from running if ffmpeg and/or gifsicle arent found  
+rem -------------------------------
+
+set "errn=0"
+where ffmpeg >nul 2>nul
+where gifsicle >nul 2>nul
+if not %errorlevel% equ 0 call :err_%errn% 2>nul
+
 rem -------------------------------
 rem newline variable from 
 rem https://stackoverflow.com/questions/132799/how-can-i-echo-a-newline-in-a-batch-file
@@ -21,7 +31,6 @@ rem -------------------------------
 
 :hajime
 set "file=vanille"
-set "errn=0"
 set "axis=0"
 set "loops=infinite"
 set "xscale=source"
@@ -68,11 +77,13 @@ set "axs=0"
 set "popsicle=0"
 set "errn=3"
 echo what profile do you want to use? (i advise people to run 4 first)
-echo  0 ^| same as source (highest quality)
-echo  1 ^| discord
-echo  2 ^| twitter
-echo  3 ^| custom
-echo  4 ^| explain the profiles
+echo  # ^| profile name             ^| quality  ^| filesize   ^|
+echo  0 ^| twitter (default)        ^| high     ^| ^<15mib    ^|
+echo  1 ^| discord                  ^| good     ^| ^<8mib     ^|
+echo  2 ^| discord emoji            ^| low      ^| ^<256kib   ^|
+echo  3 ^| source                   ^| highest  ^| 40~80mib   ^|
+echo  4 ^| custom                   ^| variable ^| variable   ^|
+echo  5 ^| explain the profiles
 set /p mode=""
 call :profile_%mode% 2> nul
 cls
@@ -84,7 +95,11 @@ rem send the results to the command builder
 rem -------------------------------
 
 :profile_0
-call :valid
+set popsicle=1
+if "%axs%"=="0" goto ax1
+if "%axis%"=="0" set yscale=600
+if "%axis%"=="1" set xscale=600
+call :timeset
 
 :profile_1
 set target=8388608
@@ -94,15 +109,18 @@ if "%axis%"=="0" set xscale=400
 if "%axis%"=="1" set yscale=300
 call :timeset
 
-
 :profile_2
+set target=262144
 set popsicle=1
 if "%axs%"=="0" goto ax1
-if "%axis%"=="0" set yscale=600
-if "%axis%"=="1" set xscale=600
+if "%axis%"=="0" set xscale=48
+if "%axis%"=="1" set yscale=48
 call :timeset
 
 :profile_3
+call :valid
+
+:profile_4
 echo enter the desired width (default is same as source)
 set /p xscale=""
 echo enter the desired height (default is same as source)
@@ -115,7 +133,7 @@ echo enter the maximum filesize (default is 15728640‬ bytes)
 set /p target=""
 call :timeset
 
-:profile_4
+:profile_5
 type profiles.txt
 pause
 goto pro
@@ -162,9 +180,9 @@ rem -------------------------------
 
 :timeset
 set "errn=3"
-set "tm=y"
+set "tm=n"
 cls
-echo do you want to make a gif of a specific length? (from timestamp) (y/n, y default)
+echo do you want to make a gif of a specific length? (from timestamp) (y/n, n default)
 echo beware experimental feature please read instructions carefuly thanks
 set /p tm=""
 call :tm_%tm% 2>nul
@@ -330,6 +348,13 @@ goto hajime
 rem -------------------------------
 rem error handling
 rem -------------------------------
+
+:err_0
+cls
+echo critical error %errn%, ffmpeg and/or gifsicle have not been located
+echo please make sure that they are properly added tou your PATH or in the folder of vanille%NL%
+pause
+exit
 
 :err_1
 cls
