@@ -71,8 +71,7 @@ rem -------------------------------
 
 :pro
 set mode=0
-set "axs=0"
-set "popsicle=0"
+set popsicle=0
 set "errn=3"
 type table.txt
 set /p mode=""
@@ -215,7 +214,6 @@ rem -------------------------------
 
 :ffb
 set "errn=4"
-echo writing %file%....
 if "%startset%"=="from the start" (
     set "startset="
 ) else (
@@ -226,6 +224,9 @@ if "%lengthset%"=="entire video" (
 ) else (
     set "lengthset=-t %lengthset% "
 )
+set "errn=6"
+for /F "delims=" %%I in ('ffprobe -v error -select_streams v:0 -show_entries stream^=r_frame_rate -of default^=noprint_wrappers^=1:nokey^=1 "%src%" 2^>^&1') do set /a "framerate=%%I+1"
+if %framerate% geq 50 call :err_%errn% 2>nul
 if "%fps%"=="source" (
     set "fps="
 ) else (
@@ -234,6 +235,7 @@ if "%fps%"=="source" (
 if "%xscale%"=="source" set xscale=-1
 if "%yscale%"=="source" set yscale=-1
 if "%loops%"=="infinite" set loops=0
+echo writing %file%....
 ffmpeg %startset% %lengthset% -i "%src%" %vsync% -vf "%fps%scale=%xscale%:%yscale%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop %loops% "%file%"
 if exist "%file%" call :opti
 call :err_%errn%
@@ -253,9 +255,11 @@ rem check if file is under 15mb and try to optimise it (preset 1 and 2 only)
 rem -------------------------------
 
 :opti
-if "%popsicle%"=="1" for %%A IN ("%file%") do set size=%%~zA
-if %size% gtr %target% call :optimise
-call end
+for %%A IN ("%file%") do set size=%%~zA
+if %size% geq %target% set ratio=1
+set /a "_optimise=%ratio%+%popsicle%"
+if %_optimise% equ 2 call :optimise
+call :end
 
 :optimise
 set "errn=3"
@@ -286,7 +290,7 @@ set unit=mib
 set conv=1048576
 if %target% leq 1048576‬ set conv=1024
 set /a "targetv=%target%/%conv%"
-set /a "_perc=%size%*100/%target%"
+set /a "_perc=(%size%*100)/%target%"
 set /a "perc=%_perc%-100"
 if %conv% leq 1024 set unit=kib
 goto :eof
@@ -300,10 +304,10 @@ cls
 echo attempt number %try%... (compression %loss%)
 if %try% gtr 5 echo the file might not look great
 gifsicle -O3 --lossy=%loss% "%file%" -o "%fileout%"
-set /a "try=try+1"
+set /a "try+=1"
 if %try% gtr 8 goto end
-set /a "loss=loss+25"
-for %%A IN ("%fileout%.gif") do set sizeout=%%~zA
+set /a "loss+=25"
+for %%A IN ("%fileout%") do set sizeout=%%~zA
 if %sizeout% gtr %target% (
     goto opm_%opm%
 ) else (
@@ -350,13 +354,20 @@ goto :eof
 
 :err_4
 cls
-echo error %errn%, an error has%NL%
+echo error %errn%, an error has occured%NL%
 goto :eof 
 
 :err_5
 cls
 echo but the target file size has not been met
 echo you may want to retry making the gif with another profile
+goto :eof
+
+:err_6
+cls
+echo error %errn%, warning the video you want to use is above 50fps (%framerate%fps) which is the maximum gifs can handle
+echo vanille will set the gif to 50fps%NL%
+set fps=50
 goto :eof
 
 echo you shouldnt have landed here!
