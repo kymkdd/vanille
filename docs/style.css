@@ -1,10 +1,18 @@
 :root {
 	--main-color: #2f53c1;
+	--main-color-light: #95a7df;
+	--main-color-dark: #182a62;
 }
 
 body {
 	font-family: 'Roboto', sans-serif;
 	text-align: left;
+}
+
+.content {
+	max-width: 960px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 h1 {
@@ -20,8 +28,13 @@ h2 {
 	font-size: 1.4em;
 }
 
-#important {
-	color: orangered;
+blockquote p {
+	margin: 0.1em;
+}
+.question {
+	color: var(--main-color-light);
+	border-left: 4px solid var(--main-color-light);
+	padding-left: 0.5em;
 }
 
 #dl-button {
@@ -44,4 +57,23 @@ h2 {
 	color: #fff;
 	text-decoration: none;
 	font-size: large;
+}
+
+a:link {
+	text-decoration: none;
+
+	color: var(--main-color);
+}
+
+a:visited {
+	color: var(--main-color);
+}
+
+a:hover {
+	color: var(--main-color-light);
+}
+
+#codeblock {
+	padding: 1em;
+	background-color: gainsboro;
 }
