@@ -7,11 +7,31 @@ h1 {
 }
 
 h2 {
-	color: orangered;
 	font-size: 1.4em;
+}
+
+#important {
+	color: orangered;
 }
 
 #dl-button {
 	background-color: black;
+	margin-top: 1em;
+	padding: 0.4em;
+	border: 0;
+	transition: .1s;
+}
+
+#dl-button:hover {
+	transform: scale(1.05);
+}
+
+#dm-button:focus {
+	transform: scale(0.9);
+}
+
+#dl-button a {
 	color: #fff;
+	text-decoration: none;
+	font-size: large;
 }
