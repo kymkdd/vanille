@@ -1,3 +1,7 @@
+:root {
+	--main-color: #2f53c1;
+}
+
 * {
 	font-family: 'IBM Plex Mono', monospace;
 }
