@@ -1,6 +1,6 @@
 # vanille
 anybody can cook gifs  
--remy ratatouille
+-rémy ratatouille
 
 ## faq
 >whats this
