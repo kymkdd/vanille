@@ -1,0 +1,17 @@
+* {
+	font-family: 'IBM Plex Mono', monospace;
+}
+
+h1 {
+	margin-bottom: 0.1em;
+}
+
+h2 {
+	color: orangered;
+	font-size: 1.4em;
+}
+
+#dl-button {
+	background-color: black;
+	color: #fff;
+}
