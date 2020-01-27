@@ -1,9 +1,0 @@
-what profile do you want to use? (i advise people to run 5 first)
- # | profile name        | quality  | filesize   |
- 0 | twitter (default)   | high     | ^<15mib    |
- 1 | discord             | good     | ^<8mib     |
- 2 | discord emoji       | low      | ^<256kib   |
- 3 | source              | highest  | 40~80mib   |
- 4 | custom              | variable | variable   |
- ? | explain profiles
-
