@@ -20,12 +20,12 @@ its just how i type normally and its mostly cus im just so used to typing that w
 
 # installation 
 
-## easy way (standalone .exe)
+## easy way (all in one archive)
   
 ### [⬇︎ download](https://github.com/lazuleri/vanille/releases/latest)
 
 this release comes bundled with ffmpeg and gifsicle directly so it works as a standalone tool  
-simply put it where you want and run it like a normal program
+simply put it where you want and run **vanille.bat** it like a normal program
 
 __note__  
 i am not aware if it will prioritise the bundled version or the one you have installed on your system 
