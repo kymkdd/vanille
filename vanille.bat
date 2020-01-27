@@ -13,6 +13,8 @@ rem -------------------------------
 set "errn=0"
 cd %~dp0\_vanille
 set PATH=%PATH%;%~dp0
+cd
+pause
 where ffmpeg >nul 2>nul 
 where gifsicle >nul 2>nul
 if not %errorlevel% geq 0 call :err_%errn% 2>nul
@@ -60,10 +62,8 @@ call :save
 goto in
 
 :save
-set "errn=2"
 echo select where to save the file
 call save.bat
-if exist "%file%" call :err_%errn% 2>nul
 title vanille - editing "%file%"
 call :pro
 goto save
@@ -114,6 +114,7 @@ call :timeset
 call :timeset
 
 :profile_4
+set popsicle=1
 echo enter the desired width (default is same as source)
 set /p xscale=""
 echo enter the desired height (default is same as source)
@@ -122,7 +123,7 @@ echo enter the desired framerate (default is same as source)
 set /p fps=""
 echo enter the desired number of loops (default is infinite)
 set /p loops=""
-echo enter the maximum filesize (default is 15728640‬ bytes)
+echo enter the maximum filesize (default is 15728640 bytes)
 set /p target=""
 call :timeset
 
@@ -239,7 +240,7 @@ if "%xscale%"=="source" set xscale=-1
 if "%yscale%"=="source" set yscale=-1
 if "%loops%"=="infinite" set loops=0
 echo writing %file%....
-ffmpeg %startset% %lengthset% -i "%src%" %vsync% -vf "%fps%scale=%xscale%:%yscale%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop %loops% "%file%"
+ffmpeg %startset% %lengthset% -i "%src%" %vsync% -vf "%fps%scale=%xscale%:%yscale%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop %loops% -y "%file%"
 if exist "%file%" call :opti
 call :err_%errn%
 goto hajime
@@ -291,7 +292,7 @@ rem -------------------------------
 :maths
 set unit=mib
 set conv=1048576
-if %target% leq 1048576‬ set conv=1024
+if %target% leq 1048576 set conv=1024
 set /a "targetv=%target%/%conv%"
 set /a "_perc=(%size%*100)/%target%"
 set /a "perc=%_perc%-100"
@@ -305,10 +306,10 @@ rem -------------------------------
 :opm_y
 cls
 echo attempt number %try%... (compression %loss%)
-if %try% gtr 5 echo the file might not look great
+if %try% gtr 5 call :retry
 gifsicle -O3 --lossy=%loss% "%file%" -o "%fileout%"
 set /a "try+=1"
-if %try% gtr 8 goto end
+if %try% gtr 8 call :end
 set /a "loss+=25"
 for %%A IN ("%fileout%") do set sizeout=%%~zA
 if %sizeout% gtr %target% (
@@ -319,6 +320,32 @@ if %sizeout% gtr %target% (
 
 :opm_n
 call:end
+
+:retry
+if %_retry% geq 1 goto:eof
+cls
+set "errn=3"
+set "opm=y"
+echo the gif may not look that good after too many optimisations
+echo do you want to try make the gif again with a lower framerate?
+echo  y ^| yes (default)
+echo  n ^| no, continue optimising
+set /p opm=""
+call :retry_%rtr% 2> nul
+call :err_%errn%
+goto retry
+
+:retry_y
+cls
+echo enter the desired framerate (default is same as source)
+set /p fps=""
+call :ffb
+
+:retry_n
+set _retry=1
+goto opm_%opm%
+
+
 
 :end
 set "errn=5"
