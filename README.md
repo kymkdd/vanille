@@ -43,14 +43,15 @@ windows builds for ffmpeg can be found at [zeranoe.com](https://ffmpeg.zeranoe.c
 windows builds for gifsicle can be found at [eternallybored.com](https://eternallybored.org/misc/gifsicle/)
 
 ### setup
-the setup is rather simple  you just need to keep the files provided on this repo together
+the setup is rather simple  you just need to keep the files provided on this repo together according to this chart
 ```
 folder
 |--vanille.bat
-|--save.bat
-|--open.bat
-|--profiles.txt
-|--table.txt
+|_vanille
+--|--save.bat
+--|--open.bat
+--|--profiles.txt
+--|--table.txt
 ```
 if ffmpeg and gifsicle are not added to your PATH you will have to include them in the same folder as well
 
