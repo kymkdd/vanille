@@ -7,13 +7,17 @@
 body {
 	font-family: 'Roboto', sans-serif;
 	text-align: left;
-	text-transform: lowercase!important;
+	text-transform: lowercase !important;
 }
 
 .content {
 	max-width: 960px;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+header img {
+	height: 6em;
 }
 
 h1 {
@@ -28,6 +32,11 @@ h1 {
 h2 {
 	font-family: 'Heebo', sans-serif;
 	font-size: 1.4em;
+}
+
+h3,
+h4 {
+	font-family: 'Heebo', sans-serif;
 }
 
 blockquote {
@@ -69,6 +78,10 @@ blockquote p {
 	color: #fff;
 	text-decoration: none;
 	font-size: large;
+}
+
+p {
+	line-height: 1.3em;
 }
 
 a:link {
