@@ -42,6 +42,8 @@ set "loss=25"
 set target=15728640
 set "startset=from the start"
 set "lengthset=entire video"
+set src=%~1
+if exist "%src%" call :save
 
 rem -------------------------------
 rem ask for the file that you need to convert and checking that it does exist
