@@ -70,7 +70,7 @@ blockquote p {
 	transform: scale(1.05);
 }
 
-#dm-button:focus {
+#dl-button:focus {
 	transform: scale(0.9);
 }
 
@@ -78,6 +78,12 @@ blockquote p {
 	color: #fff;
 	text-decoration: none;
 	font-size: large;
+}
+#dl-button:disabled {
+	background-color: var(--main-color-light);
+}
+#dl-button:disabled:hover {
+	transform: none !important;
 }
 
 p {
