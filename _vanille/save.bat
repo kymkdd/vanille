@@ -8,7 +8,7 @@ goto :eof
 Add-Type -AssemblyName System.Windows.Forms
 $f = new-object Windows.Forms.SaveFileDialog
 $f.Title = "vanille"
-$f.InitialDirectory = pwd
+$f.InitialDirectory = %UserProfiles%
 $f.Filter = "gifs (*.gif)|*.gif"
 $f.ShowHelp = $true
 [void]$f.ShowDialog()
