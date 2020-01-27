@@ -11,6 +11,7 @@ rem prevent script from running if ffmpeg and/or gifsicle arent found
 rem -------------------------------
 
 set "errn=0"
+cd _vanille
 set PATH=%PATH%;%~0
 where ffmpeg >nul 2>nul 
 where gifsicle >nul 2>nul
