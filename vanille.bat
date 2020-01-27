@@ -13,8 +13,6 @@ rem -------------------------------
 set "errn=0"
 cd %~dp0\_vanille
 set PATH=%PATH%;%~dp0
-cd
-pause
 where ffmpeg >nul 2>nul 
 where gifsicle >nul 2>nul
 if not %errorlevel% geq 0 call :err_%errn% 2>nul
@@ -46,8 +44,6 @@ set target=15728640
 set "startset=from the start"
 set "lengthset=entire video"
 set src=%~1
-echo %src%
-pause
 if exist "%src%" call :save
 
 rem -------------------------------
