@@ -1,7 +1,8 @@
 :root {
-	--main-color: #2f53c1;
-	--main-color-light: #95a7df;
-	--main-color-dark: #182a62;
+	--main-color: #000000;
+	--main-color-light: #777777;
+	--vanille-color: #e0a969;
+	--vanille-color-light: #fbeabc;
 }
 
 body {
@@ -17,7 +18,8 @@ body {
 }
 
 header img {
-	height: 6em;
+	max-height: 6em;
+	max-width: 100%;
 }
 
 h1 {
@@ -29,9 +31,39 @@ h1 {
 	line-height: 0.9em;
 }
 
+#carousel {
+	display: flex;
+	justify-content: center;
+	padding: none;
+	margin-bottom: 1em;
+}
+
+#carousel img {
+	max-height: 10em;
+	padding: 0.2em;
+}
+
+@media only screen and (max-width: 600px) {
+	#carousel {
+		flex-direction: column !important;
+	}
+
+	#carousel img {
+		align-self: center;
+		object-fit: cover;
+	}
+}
+
 h2 {
+	display: block;
+	width: fit-content;
 	font-family: 'Heebo', sans-serif;
 	font-size: 1.4em;
+}
+
+h2::content {
+	background-color: var(--main-color);
+	color: white;
 }
 
 h3,
@@ -90,18 +122,15 @@ p {
 	line-height: 1.3em;
 }
 
-a:link {
+a:link,
+a:visited {
 	text-decoration: none;
 
-	color: var(--main-color);
-}
-
-a:visited {
-	color: var(--main-color);
+	color: var(--vanille-color);
 }
 
 a:hover {
-	color: var(--main-color-light);
+	color: var(--vanille-color-light);
 }
 
 #codeblock {

@@ -16,7 +16,7 @@
     <meta property="og:description" content="anybody can cook gifs -  rémy ratatouille " />
     <meta property="og:url" content="https://vanille.nkmk.ch/" />
     <meta name="og:image" itemprop="image" content="assets/icons/android-chrome-512x512.png">
-    <meta name="theme-color" content="#2f53c1">
+    <meta name="theme-color" content="#000000">
 
     <!-- icons -->
 
@@ -34,13 +34,18 @@
     <div class="content">
         <header>
             <!--<h1>vanille</h1>-->
-            <img src="assets/img/VanilleWordmark.svg">
+            <img src="assets/img/wordmark.png" alt="vanille">
         </header>
 
         <blockquote>
-            <p>anybody can cook gifs</p>
-            <cite>- rémy ratatouille</cite>
+            <p>anybody can cook gifs <cite>- rémy ratatouille</cite></p>
         </blockquote>
+
+        <div id="carousel">
+            <img src="../examples/maryo.gif" alt="">
+            <img src="../examples/violetteo.gif" alt="">
+            <img src="../examples/coraline.gif" alt="">
+        </div>
 
         <button id="dl-button"><a href="https://github.com/lazuleri/vanille/archive/master.zip">download for
                 windows</a></button>
@@ -48,8 +53,22 @@
         <button id="dl-button"><a href="https://github.com/lazuleri/vanille">github repo</a></button>
 
         <h2>faq</h2>
-        <span class="question">whats this</span>
+        <span class="question">whats this?</span>
         <p>this is a rather simple batch/powershell hybrid that lets you make gifs in high quality pretty quickly</p>
+
+        <span class="question">what are the features?</span>
+        <p>it has multiple profiles optimised for various platforms such as twitter discord or emojis but it also offers
+            raw video -> gif conversion (huge filesizes) as well as a fully custom profile for people who want full
+            control over the output</p>
+
+        <span class="question">is there caveats?</span>
+        <p>yes obviously vanille will not make gifs above 50fps however it will not refuse videos above 50fps as input
+            this is simply a limitation of the gif standard and not of my tool <br>
+            vanille will just convert any framerate above 50fps to 50fps which might make it look a bit sped up but if
+            its something like 60fps originally then it should be fine really</p>
+
+        <span class="question"> found a bug or have a suggestion what to do?</span>
+        <p>just @ me on twitter <a href="http://twitter.com/lazuleri">@lazuleri</a></p>
 
 
         <span class="question">why batch? why not a proper language?</span>
@@ -103,16 +122,22 @@
         </p>
 
         <h2>thanks</h2>
-        <p><strong>krz </strong><a href="https://twitter.com/krz0001">@krz0001</a> for helping out with the github setup
-            (im noob orz) and the website<br>
-            <strong>ade </strong><a href="https://twitter.com/0x0ade">@0x0ade</a> for giving me ideas and helping me
-            out regarding windows stuff and code stuff<br>
-            <strong>ru </strong><a href="https://twitter.com/coralaix">@coralaix</a> for being my bff<br>
-            <strong>colorband </strong><a href="https://twitter.com/realcolorband">@realcolorband</a> for design
-            help<br>
-            <strong>cats </strong><a href="https://twitter.com/ithinkimcats">@ithinkimcats</a> for giving feedback and
-            actually
-            using the tool<br></p>
+        <p><strong>krz </strong><a href="https://twitter.com/krz0001">@krz0001</a><br>
+            for helping out with the github setup (im noob orz) and the website</p>
+
+
+        <p><strong>ade </strong><a href="https://twitter.com/0x0ade">@0x0ade</a><br>
+            for giving me ideas and helping me out regarding windows stuff and code stuff</p>
+
+
+        <p><strong>ru </strong><a href="https://twitter.com/coralaix">@coralaix</a><br>
+            for being my bff</p>
+
+        <p><strong>colorband </strong><a href="https://twitter.com/realcolorband">@realcolorband</a><br>
+            for design help</p>
+
+        <p><strong>cats </strong><a href="https://twitter.com/ithinkimcats">@ithinkimcats</a><br>
+            for giving feedback and actually using the tool</p>
 
     </div>
 </body>
