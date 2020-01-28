@@ -3,9 +3,22 @@ anybody can cook gifs
 -rémy ratatouille
 
 ## faq
->whats this
+>whats this?
 
-this is a rather simple batch/powershell hybrid that lets you make gifs in high quality pretty quickly
+this is a rather simple batch/powershell hybrid that lets you make gifs in high quality pretty quickly  
+
+>what are the features?
+
+it has multiple profiles optimised for various platforms such as twitter discord or emojis but it also offers raw video -> gif conversion (huge filesizes) as well as a fully custom profile for people who want full control over the output  
+
+>is there caveats?
+
+yes obviously vanille will not make gifs above 50fps however it will not refuse videos above 50fps as input this is simply a limitation of the gif standard and not of my tool  
+vanille will just convert any framerate above 50fps to 50fps which might make it look a bit sped up but if its something like 60fps originally then it should be fine really  
+
+>i found a bug or have a suggestion what to do?
+
+just @ me on twitter **[@lazuleri](https://twitter.com/lazuleri)**  
 
 >why batch? why not a proper language?
 
