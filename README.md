@@ -8,9 +8,9 @@
 </p>
  <br>
 <div align="middle" width="100%" heigth="100%">
-  <img src="/examples/maryo.gif"  height="146px" alt="メアリと魔女の花">
-  <img src="/examples/violetteo.gif"  height="146px" alt="incredibles 2">
-  <img src="/examples/coraline.gif"  height="146px" alt="coraline">
+  <img src="/examples/maryo.gif"  height="140px" alt="メアリと魔女の花">
+  <img src="/examples/violetteo.gif"  height="140px" alt="incredibles 2">
+  <img src="/examples/coraline.gif"  height="140px" alt="coraline">
 </div>
  </html>
  
