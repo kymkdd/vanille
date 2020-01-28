@@ -63,7 +63,7 @@ h2 {
 
 h2::content {
 	background-color: var(--main-color);
-	color: white;
+	color: #000;
 }
 
 h3,
