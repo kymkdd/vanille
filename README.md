@@ -110,7 +110,7 @@ for help with debug and requesting good features
 **krz [@krz0001](https://twitter.com/krz0001)**  
 for the code and suggestions
 
-**me [@lazuleri](https://twitter.com/lazuleri)**
+**me [@lazuleri](https://twitter.com/lazuleri)**  
 for the design and layout
 
 ### gifs
