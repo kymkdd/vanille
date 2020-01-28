@@ -15,7 +15,7 @@
  </html>
  
  
-[credits](/examples/credits.txt)
+
 
 ## faq
 >whats this?
@@ -84,9 +84,24 @@ folder
 if ffmpeg and gifsicle are not added to your PATH you will have to include them in the same folder as well
 
 # thanks
-**krz [@krz0001](https://twitter.com/krz0001)** for helping out with the github setup (im noob orz) and the website  
-**ade [@0x0ade](https://twitter.com/0x0ade)** for giving me ideas and helping me out regarding windows stuff and code stuff  
-**ru [@coralaix](https://twitter.com/coralaix)** for being my bff  
-**colorband [@realcolorband](https://twitter.com/realcolorband)** for design help  
-**cats [@ithinkimcats](https://twitter.com/ithinkimcats)** for giving feedback and actually using the tool  
+**krz [@krz0001](https://twitter.com/krz0001)**   
+for helping out with the github setup (im noob orz) and the website  
+**ade [@0x0ade](https://twitter.com/0x0ade)**   
+for giving me ideas and helping me out regarding windows stuff and code stuff  
+**ru [@coralaix](https://twitter.com/coralaix)**   
+for being my bff  
+**colorband [@realcolorband](https://twitter.com/realcolorband)**   
+for design help  
+**cats [@ithinkimcats](https://twitter.com/ithinkimcats)**  
+for giving feedback and actually using the tool  
+**narry [@smellyfeetuhave](https://twitter.com/smellyfeetuhave)**  
+for help with debug and requesting good features
 
+# credits
+from left to right  
+
+Mary and the Witch's Flower STUDIO PONOC CO.,LTD, 2017  
+Incredibles 2, Pixar Animation Studios, 2018  
+Coraline, Laika, 2009  
+
+all rights go to owners this is just to display what you can do with the tool
