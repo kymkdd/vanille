@@ -1,5 +1,6 @@
 <# : vanille.bat
 @echo off
+@chcp 65001>nul
 setlocal
 title vanille
 color f9
@@ -13,12 +14,9 @@ rem -------------------------------
 set "errn=0"
 cd %~dp0\_vanille
 set PATH=%PATH%;%~dp0
-cd
-pause
 where ffmpeg >nul 2>nul 
 where gifsicle >nul 2>nul
 if not %errorlevel% geq 0 call :err_%errn% 2>nul
-
 rem -------------------------------
 rem newline variable from 
 rem https://stackoverflow.com/questions/132799/how-can-i-echo-a-newline-in-a-batch-file
@@ -47,6 +45,26 @@ set "startset=from the start"
 set "lengthset=entire video"
 set src=%~1
 if exist "%src%" call :save
+
+:branch
+set "errn=3"
+set "_branch=n"
+echo do you want to make a gif from scratch or edit an existing one?
+echo  n ^| new gif (default)
+echo  e ^| ^edit an existing gif
+set /p _branch=""
+call :branch_%_branch% 2> nul
+call :err_%errn%
+goto branch
+
+:branch_n
+cls
+call :in
+
+:branch_e
+cls
+call chocolat.bat
+goto branch
 
 rem -------------------------------
 rem ask for the file that you need to convert and checking that it does exist
@@ -268,6 +286,8 @@ call :end
 :optimise
 set "errn=3"
 set "opm=y"
+echo %opm%
+pause
 cls
 call :maths
 echo the file has been made but is over %targetv% %unit% (%perc%%% bigger) do you want to try optimise it? (y/n, y default)
