@@ -108,14 +108,20 @@ for help with debug and requesting good features
 
 ### website
 **krz [@krz0001](https://twitter.com/krz0001)**  
-and  
+for the code and suggestions
+
 **me [@lazuleri](https://twitter.com/lazuleri)**
+for the design and layout
 
 ### gifs
-from left to right  
+all rights go to owners this is just to display what you can do with the tool  
 
-Mary and the Witch's Flower STUDIO PONOC CO.,LTD, 2017  
-Incredibles 2, Pixar Animation Studios, 2018  
-Coraline, Laika, 2009  
 
-all rights go to owners this is just to display what you can do with the tool
+
+ movie | studio | release date  
+ :--- |:--- |:---  
+ Mary and the Witch's Flower | STUDIO PONOC CO.,LTD | 2017  
+ Incredibles 2 | Pixar Animation Studios | 2018  
+ Coraline | Laika | 2009  
+ >from left to right
+
