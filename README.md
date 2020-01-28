@@ -1,6 +1,6 @@
 <html>
 <p align="middle">
-  <img src="/docs/assets/img/vanille.png" width="50%" alt="logo">
+  <img src="/docs/assets/img/wordmark.png" width="50%" alt="logo">
   <br>
   <br>
   <i>anybody can cook gifs
