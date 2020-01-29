@@ -9,7 +9,7 @@ Add-Type -AssemblyName System.Windows.Forms
 $f = new-object Windows.Forms.OpenFileDialog
 $f.Title = "vanille"
 $f.InitialDirectory = %UserProfiles%
-$f.Filter = "All Files (*.*)|*.*"
+$f.Filter = "all files (*.*)|*.*"
 $f.ShowHelp = $true
 [void]$f.ShowDialog()
 if ($f.Multiselect) { $f.FileNames } else { $f.FileName }
