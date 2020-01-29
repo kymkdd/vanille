@@ -1,4 +1,6 @@
 <# : encoder.bat
+@echo off
+@chcp 65001>nul
 set "s=-ss %s%"
 set "t=-t %t%"
 if %f% geq 50 set f=50

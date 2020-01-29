@@ -1,4 +1,6 @@
 <# : open.bat
+@echo off
+@chcp 65001>nul
 for /f "delims=" %%I in ('powershell -noprofile "iex (${%~f0} | out-string)"') do (
     set src=%%~I
 )

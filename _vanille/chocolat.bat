@@ -300,6 +300,15 @@ if exist "%file%" call :end
 call :err_%errn%
 goto choco
 
+:cc_x5
+set "errn=2"
+cls
+echo exploding %file%....
+gifsicle --explode -i "%src%" -o "%file%"
+if exist "%file%" call :end
+call :err_%errn%
+goto choco
+
 :end
 cls
 if %try% gtr 8 (

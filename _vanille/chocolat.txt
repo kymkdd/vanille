@@ -10,3 +10,4 @@ x1 | optimise            | image    |
 x2 | unoptimise          | image    |
 x3 | change color amount | image    |
 x4 | speed               | time     |
+x5 | explode frames      | image    |
