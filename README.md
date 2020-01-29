@@ -24,8 +24,8 @@ this is a rather simple batch/powershell hybrid cui that lets you make gifs in h
 
 >what is it based on?
 
-+*ffmpeg/probe* for the video heavylifting as well as the gif generation  
-+*gifsicle* for the gif edition as well as the optimisation  
++ *ffmpeg/probe* for the video heavylifting as well as the gif generation  
++ *gifsicle* for the gif edition as well as the optimisation  
 
 in the future i also plan on adding encoding using *gifski* which seems to be better than ffmpeg at keeping quality as high as possible  
 i am also considering implementing *waifu2x* optionally to improve quality for 2d animated content and *youtube-dl* to allow gif making from web sources directly
