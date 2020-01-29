@@ -1,6 +1,6 @@
 <# : vanille.bat
 @echo off
-@chcp 65001>nul
+@chcp 65001 >nul
 setlocal
 title vanille
 color f9
@@ -32,19 +32,15 @@ rem setup of the default values
 rem -------------------------------
 
 :hajime
-set "axis=0"
-set "xscale=source"
-set "yscale=source"
-set "loops=infinite"
-set "fps=source"
-set "vsync=-vsync vfr"
+set "axis=h"
+set "loops=0"
 set "try=1"
 set "loss=25"
-set target=15728640
-set "startset=from the start"
-set "lengthset=entire video"
+set "s=00:00:00.000"
+set target=15
+set conv=1048576
 set src=%~1
-if exist "%src%" call :save
+if exist "%src%" call :probe
 
 :branch
 set "errn=3"
@@ -66,29 +62,35 @@ cls
 call chocolat.bat
 goto branch
 
-rem -------------------------------
-rem ask for the file that you need to convert and checking that it does exist
-rem -------------------------------
-
 :in
 set "errn=1"
 echo please provide a path to source (drag and drop is ok)
 call open.bat
 if "%src%"=="" call :err_%errn% 2>nul
 cls
-call :save
+call :probe
 goto in
+
+:probe
+title vanille - analysing "%src%"
+for /F "delims=" %%I in ('ffprobe -v error -select_streams v:0 -show_entries stream^=r_frame_rate -of default^=noprint_wrappers^=1:nokey^=1 "%src%" 2^>^&1') do set "f=%%I"
+for /F "delims=" %%I in ('ffprobe -v error -select_streams v:0 -sexagesimal -show_entries format^=duration -of default^=noprint_wrappers^=1:nokey^=1 "%src%" 2^>^&1') do set "t=%%I"
+for /F "delims=" %%I in ('ffprobe -v error -select_streams v:0 -show_entries stream^=height -of default^=noprint_wrappers^=1:nokey^=1 "%src%" 2^>^&1') do set "h=%%I"
+for /F "delims=" %%I in ('ffprobe -v error -select_streams v:0 -show_entries stream^=width -of default^=noprint_wrappers^=1:nokey^=1 "%src%" 2^>^&1') do set "w=%%I"
+if %h% geq %w% set axis=v
+set /a "f=%f%+%f%%%2"
+if %f% geq 50 set f=50
+set $w=%w%
+set $h=%h%
+call :save
 
 :save
 echo select where to save the file
+title vanille - editing "%file%"
 call save.bat
 title vanille - editing "%file%"
 call :pro
 goto save
-
-rem -------------------------------
-rem ask which profile to use
-rem -------------------------------
 
 :pro
 set mode=0
@@ -96,85 +98,17 @@ set popsicle=0
 set "errn=3"
 type table.txt
 set /p mode=""
-call :profile_%mode% 2> nul
+call profiles.bat
+if %go% equ 1 call :timeset
 cls
 call :err_%errn%
 goto pro
 
-rem -------------------------------
-rem send the results to the command builder
-rem -------------------------------
-
-:profile_0
-set popsicle=1
-call :probe
-if "%axis%"=="0" set yscale=600
-if "%axis%"=="1" set xscale=600
-call :timeset
-
-:profile_1
-set target=8388608
-set popsicle=1
-call :probe
-if "%axis%"=="0" set xscale=400
-if "%axis%"=="1" set yscale=300
-call :timeset
-
-:profile_2
-set target=262144
-set popsicle=1
-call :probe
-if "%axis%"=="0" set xscale=48
-if "%axis%"=="1" set yscale=48
-call :timeset
-
-:profile_3
-call :timeset
-
-:profile_4
-set popsicle=1
-echo enter the desired width (default is same as source)
-set /p xscale=""
-echo enter the desired height (default is same as source)
-set /p yscale=""
-echo enter the desired framerate (default is same as source)
-set /p fps=""
-echo enter the desired number of loops (default is infinite)
-set /p loops=""
-echo enter the maximum filesize (default is 15728640 bytes)
-set /p target=""
-call :timeset
-
-:profile_?
-type profiles.txt
-pause
-cls
-goto pro
-
-rem -------------------------------
-rem find the orientation of the file, bulky but its safer as videos may not specify their orientation natively
-rem -------------------------------
-
-:probe
-for /F "delims=" %%I in ('ffprobe -v error -select_streams v:0 -show_entries stream^=height -of default^=noprint_wrappers^=1:nokey^=1 "%src%" 2^>^&1') do set "height=%%I"
-for /F "delims=" %%I in ('ffprobe -v error -select_streams v:0 -show_entries stream^=width -of default^=noprint_wrappers^=1:nokey^=1 "%src%" 2^>^&1') do set "width=%%I"
-if %width% geq %height% (
-    set axis=0
-) else (
-    set axis=1
-)
-goto :eof
-
-rem -------------------------------
-rem ask if user wants a specific length
-rem -------------------------------
-
 :timeset
 set "errn=3"
-set "tm=n"
+set "tm=y"
 cls
-echo do you want to make a gif of a specific length? (from timestamp) (y/n, n default)
-echo beware experimental feature please read instructions carefuly thanks
+echo do you want to make a gif of a specific length? (from timestamp) (y/n, y default)
 set /p tm=""
 call :tm_%tm% 2>nul
 call :err_%err%
@@ -184,38 +118,28 @@ goto timeset
 cls
 echo where do you want the gif to start from?
 echo timestamp in hh:mm:ss ex 9h3min7s = 09:03:07
-set /p startset=""
+set /p s=""
 echo how long should the gif be? (from the timestamp)
 echo timestamp in hh:mm:ss ex 9h3min7s = 09:03:07
-set /p lengthset=""
+set /p t=""
 call :valid
 
 :tm_n
 cls
 call :valid
 
-rem -------------------------------
-rem lil helper to confirm the settings
-rem -------------------------------
-
 :valid
 set "errn=3"
 set "vl=y"
 cls
-if "%axis%"=="0" (
-    set "or=horizontal"
-) else (
-    set "or=vertical"
-)
 echo here are the settings you set
-echo width         ^| %xscale% px
-echo height        ^| %yscale% px
-echo framerate     ^| %fps% fps
-echo orientation   ^| %or% 
+echo width         ^| %w% px
+echo height        ^| %h% px
+echo framerate     ^| %f% f
 echo loops         ^| %loops% 
 echo max size      ^| %target% bytes
-echo start         ^| %startset%
-echo length        ^| %lengthset% 
+echo start         ^| %s%
+echo length        ^| %t% 
 echo is this ok? (y/n, y default)
 set /p vl=""
 call :valid_%vl% 2> nul
@@ -235,42 +159,15 @@ rem builder that assembles the ffmpeg command and verifies if the file was creat
 rem -------------------------------
 
 :ffb
-set "errn=4"
-if "%startset%"=="from the start" (
-    set "startset="
-) else (
-    set "startset=-ss %startset% "
-)
-if "%lengthset%"=="entire video" (
-    set "lengthset="
-) else (
-    set "lengthset=-t %lengthset% "
-)
 set "errn=6"
-for /F "delims=" %%I in ('ffprobe -v error -select_streams v:0 -show_entries stream^=r_frame_rate -of default^=noprint_wrappers^=1:nokey^=1 "%src%" 2^>^&1') do set /a "framerate=%%I+1"
-if %framerate% geq 50 call :err_%errn% 2>nul
-if "%fps%"=="source" (
-    set "fps="
-) else (
-    call :vs
-)
-if "%xscale%"=="source" set xscale=-1
-if "%yscale%"=="source" set yscale=-1
-if "%loops%"=="infinite" set loops=0
-echo writing %file%....
-ffmpeg %startset% %lengthset% -i "%src%" %vsync% -vf "%fps%scale=%xscale%:%yscale%:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop %loops% -y "%file%"
+echo which encoder do you want to use
+echo  0 ^| ffmpeg (default, fastest, decent quality)
+echo  1 ^| gifski (experimental, slower and heavy proxy files, better quality and filesizes)
+set /p _enc=""
+call encoder.bat
 if exist "%file%" call :opti
 call :err_%errn%
 goto hajime
-
-rem -------------------------------
-rem toggle between source fps or target fps
-rem -------------------------------
-
-:vs
-set "vsync="
-set "fps=fps=%fps%,"
-goto :eof
 
 rem -------------------------------
 rem check if file is under 15mb and try to optimise it (preset 1 and 2 only)
@@ -358,14 +255,12 @@ goto retry
 :retry_y
 cls
 echo enter the desired framerate (default is same as source)
-set /p fps=""
+set /p f=""
 call :ffb
 
 :retry_n
 set _retry=1
 goto opm_%opm%
-
-
 
 :end
 set "errn=5"
@@ -415,9 +310,9 @@ goto :eof
 
 :err_6
 cls
-echo error %errn%, warning the video you want to use is above 50fps (%framerate%fps) which is the maximum gifs can handle
-echo vanille will set the gif to 50fps%NL%
-set fps=50
+echo error %errn%, warning the video you want to use is above 50f (%framerate%f) which is the maximum gifs can handle
+echo vanille will set the gif to 50f%NL%
+set f=50
 goto :eof
 
 echo you shouldnt have landed here!

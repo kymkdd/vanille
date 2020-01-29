@@ -1,0 +1,62 @@
+twitter (default)
+-------
+width           | source        | 600px if vertical
+height          | source        | 600px if horizontal
+framerate       | source        |
+loops           | infinite      |
+target size     | <15 mib       |
+
+a profile optimised for twitter specifically
+values are kind of eyballed but the 15 mebibytes limit is import
+this is mostly what i think offers the best quality/size for twitter and in general
+
+discord
+-------
+width           | source        | 400px if horizontal
+height          | source        | 300px if vertical
+framerate       | source        |
+loops           | infinite      |
+target size     | <8 mib        |
+
+a profile optimised for discord specifically
+the values are what i found is the max for either dimensions
+useful if you just want a very high quality gif and size isnt an issue
+
+discord emoji
+-------
+width           | source        | 48px if horizontal mode
+height          | source        | 48px if vertical mode
+framerate       | source        |
+loops           | infinite      |
+target size     | <256 kib      |
+
+a profile optimised for discord emojis specifically
+the values are what i found is the max for either dimensions
+id discourage people from using it for something else but you do you
+note that its better you use a square source for this as it might get very tiny otherwise
+
+source
+-------
+width           | source        |
+height          | source        |
+framerate       | source        |
+orientation     | automatic     |
+loops           | infinite      |
+target size     | none          |
+
+the default profile
+this converts the source to gif directly and bypasses the filesize verification
+useful if you just want a very high quality gif and size isnt an issue
+
+custom
+-------
+width           | user defined |
+height          | user defined |
+framerate       | user defined |
+loops           | user defined |
+target size     | user defined |
+
+a custom profile
+every value is user defined, if left blank then default values apply
+for people who want more control over the file
+
