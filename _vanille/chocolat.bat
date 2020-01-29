@@ -59,22 +59,29 @@ call :err_%errn%
 goto cc_%_choco%
 
 :cc1_0h
+set "errn=2"
 echo writing %file%....
 set /a "x1=(%width%-%height%)/2"
 set /a "x2=%width%%%2^%height%%%2"
 set /a "x1=%x1%+%x2%"
 gifsicle --crop %x1%,0+-%x1%x-%x2% -i "%src%" -o "%file%"
 if exist "%file%" call :end
+call :err_%errn%
+goto choco
 
 :cc1_0v
+set "errn=2"
 echo writing %file%....
 set /a "x1=(%height%-%width%)/2"
 set /a "x2=%width%%%2^%height%%%2"
 set /a "x1=%x1%+%x2%"
 gifsicle --crop 0,%x1%+-%x2%x-%x1% -i "%src%" -o "%file%"
 if exist "%file%" call :end
+call :err_%errn%
+goto choco
 
 :cc1_1h
+set "errn=2"
 echo where do you want to start cropping? (from left to right)
 echo value is a single integer
 echo ex. 95 means it will start cropping 95 pixels from the left
@@ -82,8 +89,11 @@ set /p x1=""
 set /a "x2=%x1%+%heigth%"
 gifsicle --crop %x1%,0-%x2%,%height% -i "%src%" -o "%file%"
 if exist "%file%" call :end
+call :err_%errn%
+goto choco
 
 :cc1_1v
+set "errn=2"
 echo where do you want to start cropping? (from top to bottom)
 echo value is a single integer
 echo ex. 95 means it will start cropping 95 pixels from the top
@@ -91,8 +101,11 @@ set /p x1=""
 set /a "x2=%x1%+%width%"
 gifsicle --crop 0,%x1%-%width%,%x2% -i "%src%" -o "%file%"
 if exist "%file%" call :end
+call :err_%errn%
+goto choco
 
 :cc1_2h
+set "errn=2"
 echo where do you want to start cropping? (top left corner)
 echo comma separated coordinates
 echo ex. 95,39 means it will start cropping 95 pixels from the left and 39 from the top
@@ -101,16 +114,80 @@ echo where do you want to stop cropping? (bottom right corner)
 set /p y1=""
 gifsicle --crop %x1%-%y1% -i "%src%" -o "%file%"
 if exist "%file%" call :end
+call :err_%errn%
+goto choco
 
 :cc1_2v
 goto cc1_2h
+
+:cc2
+set "errn=2"
+set w1=_
+set h1=_
+echo set the width (default is source)
+set /p w1=""
+echo set the height (default is source)
+set /p h1=""
+gifsicle --no-logical-screen --resize %w1%x%h1% -i "%src%" -o "%file%"
+if exist "%file%" call :end
+call :err_%errn%
+goto choco
+
+:cc3
+set "errn=3"
+echo how do you want to rotate the gif?
+echo 0 ^| rotate right (90°)
+echo 1 ^| rotate upside down (180°)
+echo 2 ^| rotate left (-90°)
+set /p _cc3=""
+call :cc3_%_cc3% 2> nul
+call :err_%errn%
+goto cc_%_choco%
+
+:cc3_0
+set "errn=2"
+gifsicle --rotate-90 -i "%src%" -o "%file%"
+if exist "%file%" call :end
+call :err_%errn%
+goto choco
+
+:cc3_1
+set "errn=2"
+gifsicle --rotate-180 -i "%src%" -o "%file%"
+if exist "%file%" call :end
+call :err_%errn%
+goto choco
+
+:cc3_2
+set "errn=2"
+gifsicle --rotate-270 -i "%src%" -o "%file%"
+if exist "%file%" call :end
+call :err_%errn%
+goto choco
+
+:cc4
+set "errn=3"
+echo how do you want to flip the gif?
+echo 0 ^| horizontally (upside-down)
+echo 1 ^| vertically (left side-right)
+set /p _cc=""
+call :cc%_choco%_%_cc% 2> nul
+call :err_%errn%
+goto cc_%_choco%
+
+:cc4_0
+set "errn=2"
+gifsicle --rotate-270 -i "%src%" -o "%file%"
+if exist "%file%" call :end
+call :err_%errn%
+goto choco
 
 :end
 cls
 echo the gif has successfully been made
 pause
 cls
-goto hajime
+goto choco
 
 :err_0
 cls
