@@ -1,0 +1,144 @@
+:root {
+	--main-color: #000000;
+	--main-color-light: #777777;
+	--vanille-color: #e0a969;
+	--vanille-color-light: #fbeabc;
+}
+
+* {
+	letter-spacing: -.019em;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+	font-family: sans-serif;
+	text-align: left;
+	text-transform: lowercase !important;
+
+	height: 100vh;
+	margin: 0;
+}
+
+.container {
+	height: 100%;
+	display: flex;
+	align-items: stretch;
+}
+
+#sidepanel {
+	flex: 5%;
+	padding: 2em;
+	padding-bottom: 0px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	text-align: right;
+}
+
+#content {
+	flex: 70%;
+	background-color: #7ccec4;
+}
+
+/*unused*/
+h1 {
+	font-family: 'Karla', sans-serif;
+	font-weight: 900;
+	color: var(--main-color);
+	font-size: 5em;
+	line-height: 0.9em;
+}
+
+#sidepanel img {
+	display: inline-block;
+	margin-left: 60%;
+	padding-bottom: 3em;
+	width: 40%;
+}
+
+nav li {
+	list-style: none;
+	font-size: x-large;
+	padding: 0.3em;
+}
+
+h2 {
+	font-family: 'Karla', sans-serif;
+	display: block;
+	width: fit-content;
+	font-size: 1.4em;
+}
+
+h3,
+h4 {
+	font-family: 'Karla', sans-serif;
+}
+
+blockquote {
+	margin-top: 0;
+}
+
+blockquote p {
+	margin: 0.1em;
+}
+
+.question {
+	color: var(--main-color-light);
+	border-left: 4px solid var(--main-color-light);
+	padding-left: 0.5em;
+}
+
+#dl-button {
+	background-color: var(--main-color);
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+
+	padding: 1em;
+	padding-top: 0.6em;
+	padding-bottom: 0.6em;
+	border: 0;
+	border-radius: 6em;
+	transition: .1s;
+}
+
+#dl-button:hover {
+	transform: scale(1.05);
+}
+
+#dl-button:focus {
+	transform: scale(0.9);
+}
+
+#dl-button a {
+	color: #fff;
+	text-decoration: none;
+	font-size: large;
+}
+#dl-button:disabled {
+	background-color: var(--main-color-light);
+}
+#dl-button:disabled:hover {
+	transform: none !important;
+}
+
+p {
+	line-height: 1.3em;
+}
+
+a:link,
+a:visited {
+	text-decoration: none;
+
+	color: var(--vanille-color);
+}
+
+a:hover {
+	color: var(--vanille-color-light);
+}
+
+#codeblock {
+	padding: 1em;
+	background-color: gainsboro;
+}
