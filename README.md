@@ -20,7 +20,15 @@
 ## faq
 >whats this?
 
-this is a rather simple batch/powershell hybrid that lets you make gifs in high quality pretty quickly  
+this is a rather simple batch/powershell hybrid cui that lets you make gifs in high quality pretty quickly and easily 
+
+>what is it based on?
+
++*ffmpeg/probe* for the video heavylifting as well as the gif generation  
++*gifsicle* for the gif edition as well as the optimisation  
+
+in the future i also plan on adding encoding using *gifski* which seems to be better than ffmpeg at keeping quality as high as possible  
+i am also considering implementing *waifu2x* optionally to improve quality for 2d animated content and *youtube-dl* to allow gif making from web sources directly
 
 >what are the features?
 
@@ -28,8 +36,8 @@ it has multiple profiles optimised for various platforms such as twitter discord
 
 >is there caveats?
 
-yes obviously vanille will not make gifs above 50fps however it will not refuse videos above 50fps as input this is simply a limitation of the gif standard and not of my tool  
-vanille will just convert any framerate above 50fps to 50fps which might make it look a bit sped up but if its something like 60fps originally then it should be fine really  
++ it cannot make gifs that have a framerate higher than 50fps due to the limitation of gif itself if the source is 50+fps the framerate will be capped to 50  
++ the generated files can be quite large especially depending on how big the gif is, also note that you may need some headroom for certain "encoding" methods due to the need of having temporary raw png frames which can quickly add up (500+ mib for a 2s video clip @ 1920x804)
 
 >i found a bug or have a suggestion what to do?
 
