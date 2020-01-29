@@ -31,115 +31,19 @@
 </head>
 
 <body>
-    <div class="content">
-        <header>
-            <!--<h1>vanille</h1>-->
-            <img src="assets/img/wordmark.png" alt="vanille">
-        </header>
+    <div class="container">
 
-        <blockquote>
-            <p>anybody can cook gifs <cite>- rémy ratatouille</cite></p>
-        </blockquote>
-
-        <div id="carousel">
-            <img src="/examples/maryo.gif" alt="">
-            <img src="/examples/violetteo.gif" alt="">
-            <img src="/examples/coraline.gif" alt="">
-        </div>
-
-        <button id="dl-button"><a href="https://github.com/lazuleri/vanille/archive/master.zip">download for
-                windows</a></button>
-
-        <button id="dl-button"><a href="https://github.com/lazuleri/vanille">github repo</a></button>
-
-        <h2>faq</h2>
-        <span class="question">whats this?</span>
-        <p>this is a rather simple batch/powershell hybrid that lets you make gifs in high quality pretty quickly</p>
-
-        <span class="question">what are the features?</span>
-        <p>it has multiple profiles optimised for various platforms such as twitter discord or emojis but it also offers
-            raw video -> gif conversion (huge filesizes) as well as a fully custom profile for people who want full
-            control over the output</p>
-
-        <span class="question">is there caveats?</span>
-        <p>yes obviously vanille will not make gifs above 50fps however it will not refuse videos above 50fps as input
-            this is simply a limitation of the gif standard and not of my tool <br>
-            vanille will just convert any framerate above 50fps to 50fps which might make it look a bit sped up but if
-            its something like 60fps originally then it should be fine really</p>
-
-        <span class="question"> found a bug or have a suggestion what to do?</span>
-        <p>just @ me on twitter <a href="http://twitter.com/lazuleri">@lazuleri</a></p>
-
-
-        <span class="question">why batch? why not a proper language?</span>
-        <p>multiple reasons, mostly because i dont know how to code at all lol, but batch is very straighforward even
-            for someone like me with very little experience <br>
-            i think working with limited stuff is more fun because it keeps u more focused on doing whats necessary
-            instead of focusing on less important stuff <br>
-            another reason is because its very portable and lets you tinker with it pretty quickly, i commented the code
-            as much as i could but some stuff probably will be quite obscure i think sorry about that</p>
-
-
-        <span class="question">why do u write like ur 13? that so obnoxious please stop</span>
-        <p>its just how i type normally and its mostly cus im just so used to typing that way than any other way makes
-            me as fast as a snail so sorry about that orz</p>
-
-        <h2>installation</h2>
-        <h3>easy way (all in one archive)</h3>
-        <button id="dl-button"><a href="https://github.com/lazuleri/vanille/releases">download</a></button>
-        <p>this release comes bundled with ffmpeg and gifsicle directly so it works as a standalone tool <br>
-            simply put it where you want and run <strong>vanille.bat</strong> like a normal program</p>
-        <p><strong>note</strong><br>
-            i am not aware if it will prioritise the bundled version or the one you have installed on your system</p>
-
-        <h3>less easy way (run the batch files directly)</h3>
-        <h4>dependencies</h4>
-        <p>vanille requires the following dependencies and will not fonction at all if they are not met</p>
-        <ul>
-            <li>ffmpeg</li>
-            <li>ffprobe*</li>
-            <li>gifsicle *<em>ffprobe is bundled with ffmpeg</em></li>
-        </ul>
-        <p>you also need to keep "profiles.txt" along with the bat as it contains various explanations that the
-            script
-            loads if asked</p>
-        <p>windows builds for ffmpeg can be found at <a href="https://ffmpeg.zeranoe.com/builds/">zeranoe.com</a><br>
-            windows builds for gifsicle can be found at <a
-                href="https://eternallybored.org/misc/gifsicle/">eternallybored.com</a></p>
-
-        <h4>setup</h4>
-        <p>the setup is rather simple you just need to keep the files provided on this repo together</p>
-        <div id="codeblock">
-            <code>folder<br>
-                |--vanille.bat<br>
-                |_vanille<br>
-                --|--save.bat<br>
-                --|--open.bat<br>
-                --|--profiles.txt<br>
-                --|--table.txt</code>
-        </div>
-        <p>if ffmpeg and gifsicle are not added to your PATH you will have to include them in the same folder as well
-        </p>
-
-        <h2>thanks</h2>
-        <p><strong>krz </strong><a href="https://twitter.com/krz0001">@krz0001</a><br>
-            for helping out with the github setup (im noob orz) and the website</p>
-
-
-        <p><strong>ade </strong><a href="https://twitter.com/0x0ade">@0x0ade</a><br>
-            for giving me ideas and helping me out regarding windows stuff and code stuff</p>
-
-
-        <p><strong>ru </strong><a href="https://twitter.com/coralaix">@coralaix</a><br>
-            for being my bff</p>
-
-        <p><strong>colorband </strong><a href="https://twitter.com/realcolorband">@realcolorband</a><br>
-            for design help</p>
-
-        <p><strong>cats </strong><a href="https://twitter.com/ithinkimcats">@ithinkimcats</a><br>
-            for giving feedback and actually using the tool</p>
-
+        <div id="sidepanel"><nav>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h1>vanille</h1>
+        </nav></div>
+        <div id="content"></div>
     </div>
+
 </body>
 
 </html>

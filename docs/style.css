@@ -1,3 +1,8 @@
+@font-face {
+	font-family: 'RieslingRegular';
+	src: url('fonts/riesling.eot');
+}
+
 :root {
 	--main-color: #000000;
 	--main-color-light: #777777;
@@ -11,10 +16,16 @@ body {
 	text-transform: lowercase !important;
 }
 
-.content {
-	max-width: 960px;
-	margin-left: auto;
-	margin-right: auto;
+.container {
+	display: flex;
+}
+
+#sidepanel {
+	flex: 30%;
+}
+#content {
+	flex: 70%;
+	background-color: black;
 }
 
 header img {
@@ -31,39 +42,11 @@ h1 {
 	line-height: 0.9em;
 }
 
-#carousel {
-	display: flex;
-	justify-content: center;
-	padding: none;
-	margin-bottom: 1em;
-}
-
-#carousel img {
-	max-height: 10em;
-	padding: 0.2em;
-}
-
-@media only screen and (max-width: 600px) {
-	#carousel {
-		flex-direction: column !important;
-	}
-
-	#carousel img {
-		align-self: center;
-		object-fit: cover;
-	}
-}
-
 h2 {
 	display: block;
 	width: fit-content;
 	font-family: 'Heebo', sans-serif;
 	font-size: 1.4em;
-}
-
-h2::content {
-	background-color: var(--main-color);
-	color: #000;
 }
 
 h3,
