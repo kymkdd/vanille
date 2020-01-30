@@ -138,6 +138,14 @@ a:hover {
 	color: var(--vanille-color-light);
 }
 
+li a:link {
+	color: black;
+}
+
+li a:hover {
+	font-weight: 900;
+}
+
 #codeblock {
 	padding: 1em;
 	background-color: gainsboro;
