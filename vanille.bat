@@ -34,7 +34,7 @@ set "s=00:00:00.000"
 set target=15728640
 
 ::skip asking for a source if drag and dropped
-set src=%~1s
+set src=%~1
 if exist "%src%" call :probe
 
 ::ask if you wanna use vanille or chocolat
@@ -161,7 +161,7 @@ goto pro
 set "errn=4"
 echo which encoder do you want to use
 echo  0 ^| ffmpeg (default, fastest, decent quality)
-echo  1 ^| gifski (slower and heavy proxy files, much better quality and slightly better filesizes)
+echo  1 ^| gifski (slower and heavy proxy files, much better qual, infinite loop only
 set /p _enc=""
 call encoder.bat
 if exist "%file%" call :opti
