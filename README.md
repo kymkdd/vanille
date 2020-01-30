@@ -32,12 +32,20 @@ i am also considering implementing *waifu2x* optionally to improve quality for 2
 
 >what are the features?
 
-it has multiple profiles optimised for various platforms such as twitter discord or emojis but it also offers raw video -> gif conversion (huge filesizes) as well as a fully custom profile for people who want full control over the output  
++ simple usage (i hope)
++ multiple profiles suited for various platforms (discord, twitter, emojis) as well as the ability to make a custom one or write [your own profile](https://github.com/lazuleri/vanille/blob/master/_vanille/profiles.bat)  
++ support for gifski which produces better gifs than the ffmpeg method (afaik vanille is the only use of it in a windows cui but i might be wrong)  
++ *chocolat* an addon to vanille that can run standalone\* to edit existing gifs and do stuff like cropping resizing optimising exploding frames etc  
 
 >is there caveats?
 
++ the automatic optimisation is a bit broken on vanille right now (it is fine on chocolat due to being written slightly differently)
 + it cannot make gifs that have a framerate higher than 50fps due to the limitation of gif itself if the source is 50+fps the framerate will be capped to 50  
-+ the generated files can be quite large especially depending on how big the gif is, also note that you may need some headroom for certain "encoding" methods due to the need of having temporary raw png frames which can quickly add up (500+ mib for a 2s video clip @ 1920x804)
++ the generated files can be quite large especially depending on how big the gif is  
+also note that you may need some headroom for certain "encoding" methods due to the need of having temporary raw png frames which can quickly add up (500+ mib for a 2s video clip @ 1920x804)  
++ due to the way the program is structured it wont be able to support drag and drop from drives (letters) different from the drive vanille is on 
++ due to the high level of optimisation of the gifs it is beyond my knowledge how to do to reverse them sorry about that (it is more complex than just playing it backwards due to transparency)
++ \*might cause issues due to it being designed as part of the vanille flow but it should be fine i hope
 
 >i found a bug or have a suggestion what to do?
 
@@ -60,8 +68,9 @@ its just how i type normally and its mostly cus im just so used to typing that w
   
 ### [⬇︎ download](https://github.com/lazuleri/vanille/releases/latest)
 
-this release comes bundled with ffmpeg and gifsicle directly so it works as a standalone tool  
-simply put it where you want and run **vanille.bat** it like a normal program
+this release comes bundled with ffmpeg, ffprobe, gifsicle and gifski directly so it works as a standalone tool  
+simply put it where you want and run **vanille.bat** like a normal program
+the folder structure is important so please leave it as is
 
 __note__  
 i am not aware if it will prioritise the bundled version or the one you have installed on your system 
@@ -70,9 +79,10 @@ i am not aware if it will prioritise the bundled version or the one you have ins
 ### dependencies
 vanille requires the following dependencies and will not fonction at all if they are not met
 
-+ ffmpeg
-+ ffprobe*
-+ gifsicle
++ **ffmpeg**
++ **ffprobe\***
++ gifsicle (technically optional)
++ gifski (optional)
 \**ffprobe is bundled with ffmpeg*
 
 windows builds for ffmpeg can be found at [zeranoe.com](https://ffmpeg.zeranoe.com/builds/)  
