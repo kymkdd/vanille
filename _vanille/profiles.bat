@@ -5,9 +5,9 @@ goto %mode%%axis%
 goto :eof
 
 ::you can add your own profiles to this file as well
-::they must start with an integer >3 and have h and v after like the other ones (you can overwrite existing ones if you want)
-::even if you have only one horizontal profile just duplicate it to have a vertical one as well
-::they must end with :
+::they MUST start with an integer >3 and have h and v after like the other ones (you can overwrite existing ones if you want)
+::even if you have only one horizontal profile just duplicate it to have a vertical one as well or make the redundent one goto the other like :4v with :4h
+::they MUST end with :
 ::set go=1
 ::goto :eof
 ::--parameters
@@ -16,7 +16,7 @@ goto :eof
 ::f = framerate
 ::s = start of the gif
 ::loops = enable looping 0=yes 1=no
-::target = max filesize
+::target = max filesize in mib
 ::popsicle = call optimiser note that if u set a target but not popsicle 
 ::it wont do anything but calling popsicle alone will optimise it with a target of 15mib
 
