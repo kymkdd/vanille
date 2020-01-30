@@ -5,12 +5,9 @@ setlocal
 title vanille
 color f9
 
-rem simple gif tool by janssson eri @lazuleri on git hub
+::simple gif tool by janssson eri @lazuleri on github
 
-rem -------------------------------
-rem prevent script from running if ffmpeg and/or gifsicle arent found  
-rem -------------------------------
-
+::prevent script from running if ffmpeg and/or gifsicle arent found  
 set "errn=0"
 cd %~dp0\_vanille
 set PATH=%PATH%;%~dp0
@@ -27,10 +24,7 @@ set NLM=^
 
 set NL=^^^%NLM%%NLM%^%NLM%%NLM%
 
-rem -------------------------------
-rem setup of the default values
-rem -------------------------------
-
+::setup of a few global values
 :hajime
 set "axis=h"
 set "loops=0"
@@ -38,9 +32,12 @@ set "try=1"
 set "loss=25"
 set "s=00:00:00.000"
 set target=15728640
+
+::skip asking for a source if drag and dropped
 set src=%~1s
 if exist "%src%" call :probe
 
+::ask if you wanna use vanille or chocolat
 :branch
 set "errn=3"
 set "_branch=n"
@@ -61,6 +58,7 @@ cls
 call chocolat.bat
 goto branch
 
+::ask for source
 :in
 set "errn=1"
 echo please provide a path to source (drag and drop is ok)
@@ -70,6 +68,7 @@ cls
 call :probe
 goto in
 
+::analyse the source to get its framerate length height and weight
 :probe
 title vanille - analysing "%src%"
 for /F "delims=" %%I in ('ffprobe -v error -select_streams v:0 -show_entries stream^=r_frame_rate -of default^=noprint_wrappers^=1:nokey^=1 "%src%" 2^>^&1') do set "f=%%I"
@@ -83,6 +82,7 @@ set $w=%w%
 set $h=%h%
 call :save
 
+::ask where to save and how to name the file
 :save
 echo select where to save the file
 title vanille - editing "%file%"
@@ -91,6 +91,7 @@ title vanille - editing "%file%"
 call :pro
 goto save
 
+::switch profiles
 :pro
 set mode=0
 set popsicle=0
@@ -103,6 +104,7 @@ cls
 call :err_%errn%
 goto pro
 
+::ask if users want a specific length
 :timeset
 set "errn=3"
 set "tm=y"
@@ -127,6 +129,7 @@ call :valid
 cls
 call :valid
 
+::ask if everything is ok
 :valid
 set "errn=3"
 set "vl=y"
@@ -153,26 +156,19 @@ call :ffb
 cls
 goto pro
 
-rem -------------------------------
-rem builder that assembles the ffmpeg command and verifies if the file was created
-rem -------------------------------
-
+::encoder selection
 :ffb
-set "errn=6"
+set "errn=4"
 echo which encoder do you want to use
 echo  0 ^| ffmpeg (default, fastest, decent quality)
-echo  1 ^| gifski (slower and heavy proxy files, better quality and filesizes)
-echo  2 ^| waifu2x ncnn vulkan - gifski hybrid (EXPERIMENTAL)
+echo  1 ^| gifski (slower and heavy proxy files, much better quality and slightly better filesizes)
 set /p _enc=""
 call encoder.bat
 if exist "%file%" call :opti
 call :err_%errn%
 goto hajime
 
-rem -------------------------------
-rem check if file is under 15mb and try to optimise it (preset 1 and 2 only)
-rem -------------------------------
-
+::check that file is under target to know if it needs optimisations
 :opti
 for %%A IN ("%file%") do set size=%%~zA
 if %size% geq %target% set ratio=1
@@ -180,6 +176,7 @@ set /a "_optimise=%ratio%+%popsicle%"
 if %_optimise% equ 2 call :optimise
 call :end
 
+::ask if the user wants said optimisations
 :optimise
 set "errn=3"
 set "opm=y"
@@ -196,16 +193,15 @@ call :opm_%opm% 2> nul
 call :err_%errn%
 goto optimise
 
+::append a o to the filename to differenciate it and know it has been optimised
 :string
 set file1="%file%"
 for %%A IN (%file1%) do set p=%%~dpA
 for %%A IN (%file1%) do set n=%%~nA
 set fileout=%p%%n%o.gif
 goto :eof
-rem -------------------------------
-rem convert bytes to mb visually
-rem -------------------------------
 
+::convert target to more human readable values and calculates difference in % between file and target
 :maths
 set unit=mib
 set conv=1048576
@@ -216,10 +212,7 @@ set /a "perc=%_perc%-100"
 if %conv% leq 1024 set unit=kib
 goto :eof
 
-rem -------------------------------
-rem "automatic" optimiser, simply just check if the file is under the set target filesize and run it until it hits
-rem -------------------------------
-
+::optimisation loop built around gifsicle -O3 that gradually increments the lossiness to try make the file hit the target
 :opm_y
 cls
 echo attempt number %try%... (compression %loss%)
@@ -238,6 +231,7 @@ if %sizeout% gtr %target% (
 :opm_n
 call:end
 
+::after 5 tries ask if the user wants to keep going since the more tries the more noise is added due to the optimisations
 :retry
 if %_retry% geq 1 goto:eof
 cls
@@ -262,6 +256,7 @@ call :ffb
 set _retry=1
 goto opm_%opm%
 
+::complete the task and go back to start
 :end
 set "errn=5"
 cls
@@ -271,10 +266,7 @@ pause
 cls
 goto hajime
 
-rem -------------------------------
-rem error handling
-rem -------------------------------
-
+::error handling
 :err_0
 cls
 echo critical error %errn%, ffmpeg and/or gifsicle have not been located
@@ -286,11 +278,6 @@ exit
 cls
 echo error %errn%, file not found or nothing was selected please retry%NL%
 goto in
-
-:err_2
-cls
-echo error %errn%, theres already a file with that name please use another name%NL%
-goto name
 
 :err_3
 cls
@@ -306,13 +293,6 @@ goto :eof
 cls
 echo but the target file size has not been met
 echo you may want to retry making the gif with another profile
-goto :eof
-
-:err_6
-cls
-echo error %errn%, warning the video you want to use is above 50f (%framerate%f) which is the maximum gifs can handle
-echo vanille will set the gif to 50f%NL%
-set f=50
 goto :eof
 
 echo you shouldnt have landed here!

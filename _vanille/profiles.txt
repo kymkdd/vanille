@@ -35,7 +35,7 @@ the values are what i found is the max for either dimensions
 id discourage people from using it for something else but you do you
 note that its better you use a square source for this as it might get very tiny otherwise
 
-source
+raw
 -------
 width           | source        |
 height          | source        |

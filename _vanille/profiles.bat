@@ -41,8 +41,7 @@ goto :eof
 set popsicle=1
 set target=8388608
 set h=-1
-set w=200
-::set w=400
+set w=400
 set go=1
 goto :eof
 
@@ -73,19 +72,16 @@ set w=-1
 set go=1
 goto :eof
 
-::source
+::raw
 :3h
 set h=-1
 set w=-1
 set go=1
 goto :eof
 
-::source
+::raw
 :3v
-set h=-1
-set w=-1
-set go=1
-goto :eof
+goto 3h
 
 ::custom
 :4h
