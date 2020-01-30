@@ -272,7 +272,7 @@ goto choco
 set "errn=2"
 cls
 echo writing %file%....
-gifsicle --unoptimize -i "%src%" -o "%file%"
+gifsicle -U -i "%src%" -o "%file%"
 if exist "%file%" call :end
 call :err_%errn%
 goto choco

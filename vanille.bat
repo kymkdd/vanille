@@ -222,6 +222,7 @@ rem -------------------------------
 
 :opm_y
 cls
+set /a "target=%target%*%conv%"
 echo attempt number %try%... (compression %loss%)
 if %try% gtr 5 call :retry
 gifsicle -O3 --lossy=%loss% "%file%" -o "%fileout%"

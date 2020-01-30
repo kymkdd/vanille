@@ -17,11 +17,16 @@ ffmpeg %s% %t% -i "%src%" -vsync vfr -r %f% -vf "scale=%w%:%h%:flags=lanczos,spl
 goto :eof
 
 :enc_1
+if %loops% equ 0 (
+    set loops=""
+) else (
+    set loops="--once"
+)
 cls
 echo writing %file%....
 md _temp
 ffmpeg %s% %t% -i "%src%" -vsync vfr -r %f% -vf "scale=%w%:%h%:flags=lanczos" "_temp\frames%%04d.png"
-gifski --fps %f% -o "%file%" _temp\frames*.png
+gifski %loops% --fps %f% -o "%file%" _temp\frames*.png
 if exist "%file%" rd /s /q _temp
 goto :eof
 #>

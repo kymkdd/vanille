@@ -15,8 +15,7 @@ goto :eof
 ::w = height
 ::f = framerate
 ::s = start of the gif
-::loops = number of loops
-
+::loops = enable looping 0=yes 1=no
 ::target = max filesize
 ::popsicle = call optimiser note that if u set a target but not popsicle 
 ::it wont do anything but calling popsicle alone will optimise it with a target of 15mib
@@ -88,7 +87,7 @@ set go=1
 goto :eof
 
 ::custom
-:4
+:4h
 set popsicle=1
 echo enter the desired width (default is same as source)
 set /p w=""
@@ -96,12 +95,15 @@ echo enter the desired height (default is same as source)
 set /p h=""
 echo enter the desired framerate (default is same as source)
 set /p f=""
-echo enter the desired number of loops (default is infinite)
+echo enable looping (0 = yes, 1 = no)
 set /p loops=""
 echo enter the maximum filesize (default is 15728640 bytes)
 set /p target=""
 set go=1
 goto :eof
+
+:4v
+goto 4h
 
 ::help
 :?
