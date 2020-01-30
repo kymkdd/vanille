@@ -37,9 +37,8 @@ set "loops=0"
 set "try=1"
 set "loss=25"
 set "s=00:00:00.000"
-set target=15
-set conv=1048576
-set src=%~1
+set target=15728640
+set src=%~1s
 if exist "%src%" call :probe
 
 :branch
@@ -162,7 +161,8 @@ rem -------------------------------
 set "errn=6"
 echo which encoder do you want to use
 echo  0 ^| ffmpeg (default, fastest, decent quality)
-echo  1 ^| gifski (experimental, slower and heavy proxy files, better quality and filesizes)
+echo  1 ^| gifski (slower and heavy proxy files, better quality and filesizes)
+echo  2 ^| waifu2x ncnn vulkan - gifski hybrid (EXPERIMENTAL)
 set /p _enc=""
 call encoder.bat
 if exist "%file%" call :opti
@@ -222,7 +222,6 @@ rem -------------------------------
 
 :opm_y
 cls
-set /a "target=%target%*%conv%"
 echo attempt number %try%... (compression %loss%)
 if %try% gtr 5 call :retry
 gifsicle -O3 --lossy=%loss% "%file%" -o "%fileout%"
