@@ -67,6 +67,7 @@ its just how i type normally and its mostly cus im just so used to typing that w
 ### [⬇︎ download](https://github.com/lazuleri/vanille/releases/latest)
 
 this release comes bundled with ffmpeg, ffprobe, gifsicle and gifski directly so it works as a standalone tool  
+note that you should still download the source code as well and update the batch files
 simply put it where you want and run **vanille.bat** like a normal program
 the folder structure is important so please leave it as is
 
