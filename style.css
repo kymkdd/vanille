@@ -35,11 +35,15 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	text-align: right;
+	font-family: 'Karla', sans-serif;
 }
 
 #content {
 	flex: 70%;
-	background-color: #7ccec4;
+	/*background-color: #7ccec4;*/
+	padding: 1em;
+	overflow: scroll;
+	margin: 0 auto;
 }
 
 /*unused*/
@@ -64,11 +68,48 @@ nav li {
 	padding: 0.3em;
 }
 
+/* GALLERY */
+
+.gifRow {
+	display: flex;
+	flex-wrap: wrap;
+	padding: 0 4px;
+}
+
+/* Create four equal columns that sits next to each other */
+.gifCol {
+	flex: 32%;
+	max-width: 32%;
+	padding: 0 4px;
+}
+
+.gifCol img {
+	margin-top: 8px;
+	vertical-align: middle;
+	width: 100%;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+	.gifCol {
+		flex: 50%;
+		max-width: 50%;
+	}
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+	.gifCol {
+		flex: 100%;
+		max-width: 100%;
+	}
+}
+
 h2 {
 	font-family: 'Karla', sans-serif;
 	display: block;
 	width: fit-content;
-	font-size: 1.4em;
+	font-size: 2em;
 }
 
 h3,
@@ -116,9 +157,11 @@ blockquote p {
 	text-decoration: none;
 	font-size: large;
 }
+
 #dl-button:disabled {
 	background-color: var(--main-color-light);
 }
+
 #dl-button:disabled:hover {
 	transform: none !important;
 }
@@ -138,7 +181,8 @@ a:hover {
 	color: var(--vanille-color-light);
 }
 
-li a:link {
+li a:link,
+li a:visited {
 	color: black;
 }
 
