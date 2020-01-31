@@ -79,7 +79,10 @@ cls
 echo please input an url
 echo note that this is not a video dowloader, videos will be deleted after the procress
 set /p $dl=""
+cls
 md _buffer
+title vanille - downloading "%$dl%"
+echo downloading %$src% this may take a while depending on how big the video is...
 youtube-dl %$dl% -q --no-warnings --recode-video webm -o _buffer\buffer
 if exist "_buffer\buffer.*" set "src=_buffer\buffer.webm"
 call :save
