@@ -51,12 +51,37 @@ goto branch
 
 :branch_n
 cls
-call :in
+call :dl
 
 :branch_e
 cls
 call chocolat.bat
 goto branch
+
+::ask between local or online source
+:dl
+set "errn=3"
+set "_dl=n"
+echo do you want to use a local source or something from a link?
+echo  0 ^| local (default)
+echo  1 ^| ^url
+set /p _dl=""
+call :dl_%_dl% 2> nul
+call :err_%errn%
+goto dl
+
+:dl_0
+call :in
+
+:dl_1
+echo please input an url
+echo note that this is not a video dowloader, videos will be deleted after the procress
+set /p $dl=""
+md _buffer
+youtube-dl %dl% -q --no-warnings -o _buffer\buffer
+if exist "_buffer\buffer.*" set "src=_buffer\buffer.*"
+call :save
+
 
 ::ask for source
 :in
@@ -65,8 +90,15 @@ echo please provide a path to source (drag and drop is ok)
 call open.bat
 if "%src%"=="" call :err_%errn% 2>nul
 cls
-call :probe
+call :save
 goto in
+
+::ask where to save and how to name the file
+:save
+echo select where to save the file
+call save.bat
+call :probe
+goto save
 
 ::analyse the source to get its framerate length height and weight
 :probe
@@ -80,16 +112,8 @@ set /a "f=%f%+%f%%%2"
 if %f% geq 50 set f=50
 set $w=%w%
 set $h=%h%
-call :save
-
-::ask where to save and how to name the file
-:save
-echo select where to save the file
-title vanille - editing "%file%"
-call save.bat
 title vanille - editing "%file%"
 call :pro
-goto save
 
 ::switch profiles
 :pro
@@ -164,6 +188,7 @@ echo  0 ^| ffmpeg (default, fastest, decent quality)
 echo  1 ^| gifski (slower and heavy proxy files, much better qual, infinite loop only
 set /p _enc=""
 call encoder.bat
+if exist "%file%" rd /s /q _buffer
 if exist "%file%" call :opti
 call :err_%errn%
 goto hajime
