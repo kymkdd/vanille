@@ -27,6 +27,7 @@ this is a rather simple batch/powershell hybrid cui that lets you make gifs in h
 + *ffmpeg/probe* for the video heavylifting as well as the gif generation  
 + *gifsicle* for the gif edition as well as the optimisation  
 + *gifski* optionally to make higher quality gifs compared to the standard ffmpeg method  
++ *youtube-dl* optionally to make a gif from an url directly  
 
 >what are the features?
 
@@ -34,6 +35,7 @@ this is a rather simple batch/powershell hybrid cui that lets you make gifs in h
 + multiple profiles suited for various platforms (discord, twitter, emojis) as well as the ability to make a custom one or write [your own profile](https://github.com/lazuleri/vanille/blob/master/_vanille/profiles.bat)  
 + support for gifski which produces better gifs than the ffmpeg method (afaik vanille is the only use of it in a windows cui but i might be wrong)  
 + *chocolat* an addon to vanille that can run standalone\* to edit existing gifs and do stuff like cropping resizing optimising exploding frames etc  
++ support for youtube-dl to make gifs from urls directly without the need to have a video locally (it will still download it temporarily but vanille is not meant to be a video downloader so please dont use it as one)  
 
 >is there caveats?
 
