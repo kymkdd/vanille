@@ -82,8 +82,8 @@ set /p $dl=""
 cls
 md _buffer
 title vanille - downloading "%$dl%"
-echo downloading %$src% this may take a while depending on how big the video is...
-youtube-dl %$dl% -q --no-warnings --recode-video webm -o _buffer\buffer
+echo downloading %$dl% this may take a while depending on how big the video is...
+youtube-dl %$dl% -f "best[height<=720]" -q --no-warnings -o _buffer\buffer.webm
 if exist "_buffer\buffer.*" set "src=_buffer\buffer.webm"
 call :save
 
