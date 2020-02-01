@@ -48,6 +48,91 @@
         </div>
         <div id="content">
             <h2>usage</h2>
+            <h3>vanille</h3>
+
+            <h4>step 1</h4>
+            <p>simply select the video you want to make into a gif, it can be a video from a website* as well like
+                youtube or twitter among many others, you can also drag and drop a file directly on
+                <strong>vanille.bat</strong> but note
+                that it will not work if the script and the file are not located on the same drive.
+            </p>
+
+            <p>*vanille is not meant to be a video downloader, downloaded videos are capped to 720p and deleted after
+                the gif has been created.
+            </p>
+
+            <h4>step 2</h4>
+            <p>select where you want to save the gif and how to name it, if you select an existing gif it will ask you
+                if you want to overwrite it and take the old name for the newly made gif. <br>
+                after you selected the location where you want to save the video, you will have to wait a short moment
+                due to vanille needing to analyse the video to get information about it such as framerate, height, width
+                and duration.
+            </p>
+
+            <h4>step 3</h4>
+            <p>this step may seem daunting due to the many options but it is very simple, numbers correspond to premade
+                profiles which correspond to various settings mostly related to the dimensions of the output gif and the
+                maximum size that it should be.
+            </p>
+
+            <p>the default profile is “twitter” which has a vertical maximum of 600px and horizontal max of 600px (this
+                depends on the orientation of the source video), identical framerate to the provided source* and a
+                target size of 15mib.
+            </p>
+
+            <p>*if the framerate is above 50fps, vanille will cap it out at 50fps due to a limitation in how gifs work,
+                this will not change the speed of the gif in any ways, it will just look a bit less smooth than the
+                video you want to use.
+            </p>
+
+            <h4>step 4</h4>
+            <p>vanille will then ask if you want to make the gif a specific length, it defaults to yes since while
+                vanille has no issues making long gifs i discourage people from making ones above 10~20 seconds since
+                the file size will blow up very fast. <br>
+                firstly it asks for the timestamp to start from which can be any of the following (values are used as
+                for illustration purposes)
+            </p>
+
+            <p>01:23:45.678 -> 1 hours 23 minutes 45 seconds and 670 milliseconds <br>
+                12:34.567 -> 12 minutes 34 seconds and 567 milliseconds <br>
+                12.345 -> 12 seconds and 345 milliseconds <br>
+                0.123 -> 123 milliseconds <br>
+                note that the only values that are not facultative depending on what you want are seconds, “12” will be
+                interpreted as 12.000 seconds for example <br>
+            </p>
+
+            <h4>step 5</h4>
+            <p>you now have to choose one of the encoders, this may seem very scary but its quite simple, the default
+                one ffmpeg is faster but will produce bigger files by a small margin and will not be at the same level
+                of quality as the gifski encoder at the same dimensions (especially small ones like the discord
+                profile), this profile is better suited if you just want to make a gif really quickly or you have
+                limited system resources. <br>
+                the second method “gifski” is a more modern method that will produce much higher quality gifs and
+                slightly smaller file sizes however it has a caveat in that it requires building gifs from still pngs
+                that's why it is slower because ffmpeg simply converts videos into gifs directly, the gifski method
+                requires in a first time that ffmpeg splits the video into frame at the specified framerate which can be
+                a bit intensive on your resources and take some time depending on how many frames are required, then,
+                gifski will take the files and put them back together into the gif file.
+            </p>
+
+            <p>vanille will clean up the temporary frames by itself once the gif is made however in the event of a crash
+                during this step you should manually clean them, they are located in a folder called _temp inside the
+                folder _vanille
+            </p>
+
+            <h4>step 6 (optional)</h4>
+            <p>if the gif produced is over a certain size threshold it will ask you if you want to optimise it, if you
+                say yes (default) it will run the gif a maximum of 8 times with incremental compression levels through
+                the optimisation process, after the 5th try it will ask you if you wish to pursue or stop there, this is
+                because after 5 levels of optimisations the gif may not look so great anymore but this heavily depends
+                on what your gif looks like in the first place. this step does not mess with the previously made gif in
+                any ways, it instead makes its own file called the same as your .gif with a “o” appended to it.
+            </p>
+
+            <p>example : e.gif will give us an optimised filed called eo.gif
+            </p>
+
+            <h3>chocolat</h3>
 
         </div>
     </div>
