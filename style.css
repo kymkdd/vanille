@@ -76,7 +76,6 @@ nav li {
 	padding: 0 4px;
 }
 
-/* Create four equal columns that sits next to each other */
 .gifCol {
 	flex: 32%;
 	max-width: 32%;
@@ -89,16 +88,8 @@ nav li {
 	width: 100%;
 }
 
-/* Responsive layout - makes a two column-layout instead of four columns */
-@media screen and (max-width: 800px) {
-	.gifCol {
-		flex: 50%;
-		max-width: 50%;
-	}
-}
-
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 900px) {
 	.gifCol {
 		flex: 100%;
 		max-width: 100%;
