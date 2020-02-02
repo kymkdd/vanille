@@ -86,28 +86,23 @@ set "errn=2"
 cls
 echo where do you want to start cropping? (from left to right)
 echo value is a single integer
-echo ex. 95 means it will start cropping 95 pixels from the left
+echo ex. 95, means it will start cropping 95 pixels from the left
 set /p x1=""
-set /a "x2=%x1%+%heigth%"
-gifsicle --crop %x1%,0-%x2%,%height% -i "%src%" -o "%file%"
+echo where do you want to start cropping? (from top to bottom)
+echo value is a single integer
+echo ex. 95, means it will start cropping 95 pixels from the top
+set /p x2=""
+echo how big should the square be?
+set /p y=""
+set /a "y1=%x1%+%y%"
+set /a "y2=%x2%+%y%"
+gifsicle --crop %x1%,%x2%-%y1%,%y2% -i "%src%" -o "%file%"
 if exist "%file%" call :end
 call :err_%errn%
 goto choco
 
 :cc1_1v
-set "errn=2"
-cls
-echo where do you want to start cropping? (from top to bottom)
-echo value is a single integer
-echo ex. 95 means it will start cropping 95 pixels from the top
-set /p x1=""
-set /a "x2=%x1%+%width%"
-cls
-echo writing %file%....
-gifsicle --crop 0,%x1%-%width%,%x2% -i "%src%" -o "%file%"
-if exist "%file%" call :end
-call :err_%errn%
-goto choco
+goto cc1_1h
 
 :cc1_2h
 set "errn=2"
