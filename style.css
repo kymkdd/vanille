@@ -90,12 +90,7 @@ nav li {
 
 .gifContainer {
 	position: relative;
-	width: 50%;
-}
-
-.gifContainer:hover {
-	-webkit-filter: grayscale(70%); /* Safari 6.0 - 9.0 */
-	filter: grayscale(70%);
+	width: 100%;
 }
 
 .gifOverlay {
@@ -115,10 +110,14 @@ nav li {
 	opacity: 1;
 }
 
+.gifContainer:hover {
+	animation: gifAnimation 3s ease-in-out infinite;
+}
+
 .gifText {
 	color: white;
+	background-color: rgba(0, 0, 0, 1);
 	font-family: 'Karla', sans-serif;
-	font-size: small;
 
 	position: absolute;
 	top: 50%;
@@ -127,6 +126,28 @@ nav li {
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 	text-align: center;
+}
+
+@keyframes gifAnimation {
+	0% {
+		filter: grayscale(70%) drop-shadow(4px 4px 0px black);
+	}
+
+	25% {
+		filter: grayscale(70%) drop-shadow(2px 2px 0px black);
+	}
+
+	50% {
+		filter: grayscale(70%) drop-shadow(4px 4px 0px cyan);
+	}
+
+	75% {
+		filter: grayscale(70%) drop-shadow(2px 2px 0px cyan);
+	}
+
+	100% {
+		filter: grayscale(70%) drop-shadow(4px 4px 0px black);
+	}
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
