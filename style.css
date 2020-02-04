@@ -88,6 +88,19 @@ nav li {
 	width: 100%;
 }
 
+.gifContainer::after:hover {
+	display: block;
+	position: relative;
+	background: rgb(0, 0, 255);
+	background: -moz-linear-gradient(0deg, rgba(0, 0, 255, 1) 0%, rgba(0, 0, 255, 0) 30%, rgba(0, 0, 255, 0) 100%);
+	background: -webkit-linear-gradient(0deg, rgba(0, 0, 255, 1) 0%, rgba(0, 0, 255, 0) 30%, rgba(0, 0, 255, 0) 100%);
+	background: linear-gradient(0deg, rgba(0, 0, 255, 1) 0%, rgba(0, 0, 255, 0) 30%, rgba(0, 0, 255, 0) 100%);
+	margin-top: -150px;
+	height: 150px;
+	width: 100%;
+	content: '';
+}
+
 .gifContainer {
 	position: relative;
 	width: 100%;
@@ -114,11 +127,17 @@ nav li {
 	animation: gifAnimation 3s ease infinite;
 }
 
+.gifOverlay {
+	background: var(--vanille-color);
+	background: -moz-linear-gradient(0deg, var(--vanille-color) 0%, rgba(0, 0, 255, 0) 100%);
+	background: -webkit-linear-gradient(0deg, var(--vanille-color) 0%, rgba(0, 0, 255, 0) 100%);
+	background: linear-gradient(0deg, var(--vanille-color) 0%, rgba(0, 0, 255, 0) 100%);
+	font-family: 'Karla', sans-serif;
+}
+
 .gifText {
 	color: white;
-	mix-blend-mode: difference;
-	/*background-color: rgba(0, 0, 0, 1);*/
-	font-family: 'Karla', sans-serif;
+	font-weight: 900;
 
 	position: absolute;
 	top: 50%;
@@ -139,11 +158,11 @@ nav li {
 	}
 
 	50% {
-		filter: grayscale(70%) drop-shadow(4px 4px 0px cyan);
+		filter: grayscale(70%) drop-shadow(4px 4px 0px var(--vanille-color));
 	}
 
 	75% {
-		filter: grayscale(70%) drop-shadow(2px 2px 0px cyan);
+		filter: grayscale(70%) drop-shadow(2px 2px 0px var(--vanille-color));
 	}
 
 	100% {
