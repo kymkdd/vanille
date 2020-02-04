@@ -111,12 +111,13 @@ nav li {
 }
 
 .gifContainer:hover {
-	animation: gifAnimation 3s ease-in-out infinite;
+	animation: gifAnimation 3s ease infinite;
 }
 
 .gifText {
 	color: white;
-	background-color: rgba(0, 0, 0, 1);
+	mix-blend-mode: difference;
+	/*background-color: rgba(0, 0, 0, 1);*/
 	font-family: 'Karla', sans-serif;
 
 	position: absolute;
